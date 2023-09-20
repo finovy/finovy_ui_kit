@@ -1,0 +1,26 @@
+name: fn_ui_kit
+description: 公用ui组件
+version: 1.0.0
+homepage:
+
+environment:
+  sdk: '>=2.18.0 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.3
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+  uses-material-design: true
+  assets:
+    - lib/assets/images/
