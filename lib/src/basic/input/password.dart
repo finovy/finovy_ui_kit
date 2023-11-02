@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fn_ui_kit/fn_ui_kit.dart';
 
 import '../../../res/lib_res.dart';
-import '../../constant/colors.dart';
-import '../../constant/fonts.dart';
-import '../../constant/images.dart';
-import 'normal.dart';
 
 class FNUIPasswordInputController extends ChangeNotifier {
   bool _obscureText = false;
@@ -64,7 +61,8 @@ class FNUIPasswordInputWidget extends StatefulWidget {
 }
 
 class _FNUIPasswordInputWidgetState extends State<FNUIPasswordInputWidget> {
-  BorderSide get defaultBorderSide => BorderSide(color: FNColors.line);
+  BorderSide get defaultBorderSide =>
+      const BorderSide(color: FNColors.splitLineColor);
 
   late FNUIPasswordInputController realPasswordInputController;
 
@@ -110,13 +108,13 @@ class _FNUIPasswordInputWidgetState extends State<FNUIPasswordInputWidget> {
             fieldCallBack: widget.fieldCallBack ?? (value) {},
             errorText: widget.errorText,
             errorBorder: UnderlineInputBorder(
-                borderSide:
-                    defaultBorderSide.copyWith(color: FNColors.color_ffEE0A24)),
+                borderSide: defaultBorderSide.copyWith(
+                    color: FNColors.textWarningColor)),
             focusedErrorBorder: UnderlineInputBorder(
-                borderSide:
-                    defaultBorderSide.copyWith(color: FNColors.color_ffEE0A24)),
+                borderSide: defaultBorderSide.copyWith(
+                    color: FNColors.textWarningColor)),
             errorStyle: const TextStyle(
-              color: FNColors.color_ffEE0A24,
+              color: FNColors.textWarningColor,
               fontSize: FNFontSize12,
               height: 1.5,
             ),
@@ -132,8 +130,8 @@ class _FNUIPasswordInputWidgetState extends State<FNUIPasswordInputWidget> {
             suffixIconConstraints: const BoxConstraints(maxHeight: 40),
             obscureText: !realPasswordInputController.obscureText,
             // maxLines: maxLines,
-            textStyle:
-                TextStyle(fontSize: FNFontSize16, color: FNColors.fontMain),
+            textStyle: const TextStyle(
+                fontSize: FNFontSize16, color: FNColors.textColor),
             hintStyle: const TextStyle(fontSize: FNFontSize16),
             autoHeight: false,
             enabled: widget.enabled,

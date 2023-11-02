@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fn_ui_kit/fn_ui_kit.dart';
 
 typedef RatingChangeCallback = void Function(double? rating);
 
@@ -73,23 +74,23 @@ class FNRateState extends State<FNRate> {
   Widget buildStar(BuildContext context, int index) {
     Widget icon;
     if (index >= currentRating!) {
-      icon = widget.nonFilledIcon ?? _buildDefaultIcon(Color(0xffB0B0B0));
+      icon = widget.nonFilledIcon ?? _buildDefaultIcon(FNColors.gray6);
     } else if (index >
             currentRating! -
                 (widget.allowHalfRating ? halfStarThreshold : 1.0) &&
         index < currentRating!) {
       icon = Stack(
         children: [
-          widget.nonFilledIcon ?? _buildDefaultIcon(Color(0xffB0B0B0)),
+          widget.nonFilledIcon ?? _buildDefaultIcon(FNColors.gray6),
           ClipPath(
             clipBehavior: Clip.hardEdge,
             clipper: HalfClipper(),
-            child: widget.filledIcon ?? _buildDefaultIcon(Color(0xffFFBF1C)),
+            child: widget.filledIcon ?? _buildDefaultIcon(FNColors.yellow),
           ),
         ],
       );
     } else {
-      icon = widget.filledIcon ?? _buildDefaultIcon(Color(0xffFFBF1C));
+      icon = widget.filledIcon ?? _buildDefaultIcon(FNColors.yellow);
     }
     final Widget star = widget.isReadOnly
         ? icon
@@ -170,7 +171,8 @@ class FNRateState extends State<FNRate> {
                       currentRating = newRating;
                     });
                     debounceTimer?.cancel();
-                    debounceTimer = Timer(Duration(milliseconds: 100), () {
+                    debounceTimer =
+                        Timer(const Duration(milliseconds: 100), () {
                       if (widget.onRated != null) {
                         currentRating = normalizeRating(newRating);
                         widget.onRated!(currentRating);
@@ -195,7 +197,6 @@ class FNRateState extends State<FNRate> {
                     newRating = 0.0;
                   }
                   newRating = normalizeRating(newRating);
-                  print("newrating is $newRating");
                   setState(() {
                     currentRating = newRating;
                   });
@@ -221,7 +222,7 @@ class FNRateState extends State<FNRate> {
                     currentRating = newRating;
                   });
                   debounceTimer?.cancel();
-                  debounceTimer = Timer(Duration(milliseconds: 100), () {
+                  debounceTimer = Timer(const Duration(milliseconds: 100), () {
                     if (widget.onRated != null) {
                       currentRating = normalizeRating(newRating);
                       widget.onRated!(currentRating);

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../constant/export.dart';
-import '../theme/index.dart';
+import 'package:fn_ui_kit/fn_ui_kit.dart';
 
 /*
  * @description: 单选项
@@ -95,11 +93,9 @@ class _FNUIRadioState extends State<FNUIRadio> {
                           left: 16, right: 16, top: 8, bottom: 8),
                   decoration: BoxDecoration(
                       color: _selectIndex == index
-                          ? widget.selectedColor ?? FNColors.mainColor
+                          ? widget.selectedColor ?? FNColors.primary
                           : widget.unSelectedTextColor ??
-                              FNThemeManager.instance.themeData.buttonConfig
-                                  ?.btn_secondary_pressed ??
-                              const Color(0xffe8ebed),
+                              FNColors.buttonAssPressedBackgroundColor,
                       borderRadius:
                           BorderRadius.all(Radius.circular(widget.radius))),
                   alignment: Alignment.center,
@@ -108,7 +104,7 @@ class _FNUIRadioState extends State<FNUIRadio> {
                     style: TextStyle(
                         color: _selectIndex == index
                             ? widget.selectedTextColor ?? FNColors.card
-                            : widget.unSelectedTextColor ?? FNColors.fontMain,
+                            : widget.unSelectedTextColor ?? FNColors.textColor,
                         fontSize: widget.textSize),
                   ),
                 ),

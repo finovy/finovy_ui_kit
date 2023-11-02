@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:fn_ui_kit/fn_ui_kit.dart';
 
 import '../../res/lib_res.dart';
-import '../basic/export.dart';
-import '../constant/export.dart';
 
 /*
  * @description: 单行列表项，（前缀图片）标题，内容，（后缀图片）箭头，
@@ -82,7 +81,7 @@ class FNUICell extends StatelessWidget {
                       FNUIText(
                         margin: EdgeInsets.only(left: space ?? 12),
                         text: title,
-                        color: titleStyle?.color ?? FNColors.fontMain,
+                        color: titleStyle?.color ?? FNColors.textColor,
                         fontSize: titleStyle?.fontSize ?? FNFontSize16,
                         fontWeight: titleStyle?.fontWeight ?? FontWeight.w500,
                         maxLines: 1,
@@ -94,7 +93,7 @@ class FNUICell extends StatelessWidget {
                 ),
                 FNUIText(
                   text: rightTitle ?? '',
-                  color: rightTitleStyle?.color ?? FNColors.fontMain,
+                  color: rightTitleStyle?.color ?? FNColors.textColor,
                   fontSize: rightTitleStyle?.fontSize ?? FNFontSize14,
                   fontWeight: rightTitleStyle?.fontWeight ?? FontWeight.normal,
                 ),
@@ -117,7 +116,7 @@ class FNUICell extends StatelessWidget {
           visible: showLine,
           child: Container(
               margin: EdgeInsets.symmetric(horizontal: padding?.left ?? 18.0),
-              color: lineColor ?? FNColors.line,
+              color: lineColor ?? FNColors.splitLineColor,
               height: lineHeight ?? 0.5),
         )
       ],
@@ -187,7 +186,7 @@ class _FNUICellWithSwitchState extends State<FNUICellWithSwitch> {
           Expanded(
             child: FNUIText(
               text: widget.title,
-              color: FNColors.fontMain,
+              color: FNColors.textColor,
               fontSize: widget.titleFontSize ?? FNFontSize16,
               fontWeight: widget.titleFontWight ?? FontWeight.w600,
               maxLines: 1,
@@ -197,9 +196,8 @@ class _FNUICellWithSwitchState extends State<FNUICellWithSwitch> {
             ignoring: widget.disable,
             child: CupertinoSwitch(
                 value: _switchOn,
-                activeColor: widget.disable
-                    ? const Color(0xFFB3CDFF)
-                    : const Color(0xFF0058ff),
+                activeColor:
+                    widget.disable ? const Color(0xFFB3CDFF) : FNColors.primary,
                 trackColor: widget.disable
                     ? const Color(0xFFF5F5F6)
                     : const Color(0XffE9E9EB),
@@ -273,11 +271,11 @@ class FNUICellDoubleLine extends StatelessWidget {
                 Text(
                   title ?? '',
                   style: titleStyle ??
-                      TextStyle(
+                      const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           height: 1.5,
-                          color: FNColors.fontMain),
+                          color: FNColors.textColor),
                   maxLines: content?.isNotEmpty == true ? 1 : 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -285,11 +283,11 @@ class FNUICellDoubleLine extends StatelessWidget {
                     ? Text(
                         content ?? '',
                         style: contentStyle ??
-                            TextStyle(
+                            const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.normal,
                                 height: 1.67,
-                                color: FNColors.fontNormal),
+                                color: FNColors.textSecondaryColor),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       )
@@ -307,11 +305,11 @@ class FNUICellDoubleLine extends StatelessWidget {
             child: Text(
               desc ?? '',
               style: descStyle ??
-                  TextStyle(
+                  const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.normal,
                       height: 1.57,
-                      color: FNColors.fontNormal),
+                      color: FNColors.textSecondaryColor),
               textAlign: TextAlign.end,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,

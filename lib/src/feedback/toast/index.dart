@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
-
-import '../../context/index.dart';
+import 'package:fn_ui_kit/fn_ui_kit.dart';
 
 /// 位置枚举
 enum ToastAlign {
@@ -326,6 +324,7 @@ class ToastChild extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FNToastThemeData contextThemeData = FNToastTheme.of(context);
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Container(
@@ -334,8 +333,9 @@ class ToastChild extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         child: Container(
           decoration: BoxDecoration(
-              color: background ?? const Color(0xffffffff),
-              borderRadius: BorderRadius.circular(radius ?? 20),
+              color: background ?? contextThemeData.background,
+              borderRadius:
+                  BorderRadius.circular(radius ?? contextThemeData.radius),
               boxShadow: const [
                 BoxShadow(
                     color: Color(0x16000000),
@@ -348,7 +348,8 @@ class ToastChild extends StatelessWidget {
           child: RichText(
             text: TextSpan(children: <InlineSpan>[
               leadingSpan,
-              TextSpan(text: msg, style: textStyle),
+              TextSpan(
+                  text: msg, style: textStyle ?? contextThemeData.textStyle),
             ]),
           ),
         ),

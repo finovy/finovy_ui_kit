@@ -1,10 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../basic/export.dart';
-import '../../constant/export.dart';
-import 'src/indicator/custom_indicator.dart';
-import 'src/smart_refresher.dart';
+import 'package:fn_ui_kit/fn_ui_kit.dart';
 
 class FNUIRefresh extends StatelessWidget {
   ///列表内容，当child为空时，使用slivers来渲染
@@ -57,19 +53,19 @@ class FNUIRefresh extends StatelessWidget {
   final bool? hideFooterWhenNotFull;
 
   /// 刷新中的文案
-  final String refreshingText;
+  final String? refreshingText;
 
   /// 下拉刷新的文案
-  final String idleText;
+  final String? idleText;
 
   /// 刷新完成文案
-  final String completedText;
+  final String? completedText;
 
   /// 刷新失败文案
-  final String failedText;
+  final String? failedText;
 
   /// 没有更多文案
-  final String noMoreText;
+  final String? noMoreText;
 
   const FNUIRefresh({
     Key? key,
@@ -91,158 +87,27 @@ class FNUIRefresh extends StatelessWidget {
     this.footerWidget,
     this.enablePullDown,
     this.enablePullUp,
-    this.refreshingText = '正在加载...',
-    this.idleText = '下拉刷新',
-    this.completedText = '刷新成功',
-    this.failedText = '刷新失败',
-    this.noMoreText = '- 已经到底啦 -',
+    this.refreshingText,
+    this.idleText,
+    this.completedText,
+    this.failedText,
+    this.noMoreText,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SmartRefresher(
-      enablePullDown: enablePullDown ?? true,
-      enablePullUp: enablePullUp ?? true,
-      header: headerWidget ??
-          // ClassicHeader(
-          //   releaseText: '松开开始刷新数据',
-          //   refreshingText: '刷新中…',
-          //   completeText: '刷新成功',
-          //   failedText: '刷新失败，请检查网络',
-          //   idleText: '下拉刷新',
-          //   canTwoLevelText: '松开开始刷新数据',
-          // ),
-          CustomHeader(
-            builder: (context, mode) {
-              final String text;
-              Widget? prefixIcon;
-              switch (mode) {
-                case RefreshStatus.idle:
-                  text = idleText;
-                  prefixIcon = const Icon(
-                    Icons.arrow_downward,
-                    color: FNColors.color_FF666666,
-                    size: 16,
-                  );
-                  break;
-                // case RefreshStatus.canRefresh:
-                //   text = '松开后刷新';
-                //   prefixIcon = const Icon(
-                //     Icons.arrow_downward,
-                //     color: SMColors.color_FF666666,
-                //     size: 16,
-                //   );
-                //   break;
-                case RefreshStatus.refreshing:
-                  text = refreshingText;
-                  prefixIcon = const CupertinoActivityIndicator(
-                    color: FNColors.color_FF666666,
-                    radius: 8,
-                  );
-                  break;
-                case RefreshStatus.completed:
-                  text = completedText;
-                  prefixIcon = const Icon(
-                    Icons.check,
-                    color: FNColors.color_FF666666,
-                    size: 16,
-                  );
-                  break;
-                case RefreshStatus.failed:
-                  text = failedText;
-                  prefixIcon = const Icon(
-                    Icons.close,
-                    color: FNColors.color_FF666666,
-                    size: 16,
-                  );
-                  break;
-                default:
-                  text = '';
-                  break;
-              }
-              return SizedBox(
-                height: 44,
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (prefixIcon != null)
-                        Padding(
-                            padding: const EdgeInsets.only(right: 8),
-                            child: prefixIcon),
-                      FNUIText(
-                        text: text,
-                        fontSize: FNFontSize14,
-                        color: FNColors.color_FF666666,
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-      footer: footerWidget ??
-          // CustomFooter(
-          //   builder: (c, mode) {
-          //     Widget body;
-          //     if (mode == LoadStatus.idle) {
-          //       body = const Text("上拉加载",
-          //           style: TextStyle(
-          //               fontSize: SMFontSize12,
-          //               color: Color.fromRGBO(102, 102, 102, 1)));
-          //     } else if (mode == LoadStatus.loading) {
-          //       body = const CupertinoActivityIndicator();
-          //     } else if (mode == LoadStatus.failed) {
-          //       body = const Text("加载失败！点击重试！",
-          //           style: TextStyle(
-          //               fontSize: SMFontSize12,
-          //               color: Color.fromRGBO(102, 102, 102, 1)));
-          //     } else if (mode == LoadStatus.canLoading) {
-          //       body = const Text("松手,加载更多!",
-          //           style: TextStyle(
-          //               fontSize: SMFontSize12,
-          //               color: Color.fromRGBO(102, 102, 102, 1)));
-          //     } else {
-          //       body = const Text("没有更多数据了!",
-          //           style: TextStyle(
-          //               fontSize: SMFontSize12,
-          //               color: Color.fromRGBO(102, 102, 102, 1)));
-          //     }
-          //     return SizedBox(
-          //       height: 55.0,
-          //       child: Center(child: body),
-          //     );
-          //   },
-          // ),
-          CustomFooter(
-            builder: (context, mode) {
-              final String text;
+    FNRefreshThemeData contextThemeData = FNRefreshTheme.of(context);
 
-              switch (mode) {
-                case LoadStatus.noMore:
-                  text = noMoreText;
-                  break;
-                default:
-                  text = '';
-                  break;
-              }
-              return SizedBox(
-                height: 44,
-                child: Center(
-                  child: FNUIText(
-                    text: text,
-                    fontSize: FNFontSize14,
-                    color: FNColors.color_f8c8c8c,
-                  ),
-                ),
-              );
-            },
-          ),
-      controller: refreshController ?? RefreshController(),
+    return SmartRefresher(
+      enablePullDown: enablePullDown ?? contextThemeData.enablePullDown,
+      enablePullUp: enablePullUp ?? contextThemeData.enablePullUp,
+      header: headerWidget ?? contextThemeData.headerWidget,
+      footer: footerWidget ?? contextThemeData.footerWidget,
+      controller: refreshController ?? contextThemeData.refreshController,
       scrollController: scrollController,
-      reverse: reverse,
+      reverse: reverse ?? contextThemeData.reverse,
       primary: primary,
-      physics: physics,
+      physics: physics ?? contextThemeData.physics,
       cacheExtent: cacheExtent,
       semanticChildCount: semanticChildCount,
       onRefresh: onRefresh,

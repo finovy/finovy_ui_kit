@@ -4,3 +4,6 @@ export 'dialog/base.dart';
 export 'progress/circular.dart';
 export 'progress/line.dart';
 export 'toast/index.dart';
+export 'step/step.dart';
+export 'step/steps.dart';
+export 'notice/notice_bar.dart';

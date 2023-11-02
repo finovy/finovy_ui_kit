@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fn_ui_kit/fn_ui_kit.dart';
 
 import '../../../res/lib_res.dart';
-import '../../constant/export.dart';
 
 /// 页面状态
 enum EmptyWidgetState {
@@ -91,6 +91,30 @@ class FNUIEmptyWidget extends StatelessWidget {
 
   /// 内容在屏幕的位置
   final EmptyWidgetContentPosition? position;
+
+  /// 按钮的padding
+  final EdgeInsetsGeometry? buttonPadding;
+
+  /// 按钮背景颜色
+  final Color? buttonBackgroundColor;
+
+  /// 按钮边框弧度
+  final double? buttonRadius;
+
+  /// 按钮尺寸
+  final Size? buttonSize;
+
+  /// 按钮文字样式
+  final TextStyle? buttonTextStyle;
+
+  /// 自定义占位组件（优先级高于预设）
+  final Widget? placeHolderWidget;
+
+  /// 自定义title组件（优先级高于预设）
+  final Widget? titleWidget;
+
+  /// 自定义操作区（优先级高于预设）
+  final Widget? optionWidget;
   const FNUIEmptyWidget({
     super.key,
     required this.state,
@@ -103,13 +127,21 @@ class FNUIEmptyWidget extends StatelessWidget {
     this.onTapButton,
     this.buttonTitle,
     this.position,
+    this.buttonPadding,
+    this.buttonBackgroundColor,
+    this.buttonRadius,
+    this.buttonSize,
+    this.buttonTextStyle,
+    this.placeHolderWidget,
+    this.titleWidget,
+    this.optionWidget,
   });
 
   /// 默认字体样式
   TextStyle get defaultTitleStyle => const TextStyle(
         fontFamily: 'PingFangSC',
         fontSize: 14,
-        color: FNColors.color_FF666666,
+        color: FNColors.textSecondaryColor,
       );
 
   /// 根据状态获取图片路径
@@ -135,8 +167,8 @@ class FNUIEmptyWidget extends StatelessWidget {
   }
 
   /// 构建占位图
-  Widget _buildPlaceHolderImage(FNUIEmptyWidgetConfigure? config) {
-    return config?.placeHolderWidget ??
+  Widget _buildPlaceHolderImage() {
+    return placeHolderWidget ??
         Image.asset(
           imagePath,
           package: state != EmptyWidgetState.custom
@@ -148,8 +180,8 @@ class FNUIEmptyWidget extends StatelessWidget {
   }
 
   /// 构建标题
-  Widget _buildTitle(FNUIEmptyWidgetConfigure? config) {
-    return config?.titleWidget ??
+  Widget _buildTitle() {
+    return titleWidget ??
         Text(
           title,
           style: defaultTitleStyle,
@@ -174,7 +206,7 @@ class FNUIEmptyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     /// 从InheritedWidget获取配置
-    FNUIEmptyWidgetConfigure? config = FNUIEmptyWidgetConfigure.of(context);
+    FNEmptyThemeData config = FNEmptyTheme.of(context);
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -184,18 +216,18 @@ class FNUIEmptyWidget extends StatelessWidget {
           top: position?.top,
           bottom: position?.bottom,
           child: contentWrapper([
-            _buildPlaceHolderImage(config),
+            _buildPlaceHolderImage(),
             SizedBox(
               height: imageTitleSpacing,
             ),
-            _buildTitle(config),
-            if (config?.optionWidget != null) ...[
+            _buildTitle(),
+            if (optionWidget != null) ...[
               SizedBox(
                 height: titleOptionAreaSpacing,
               ),
-              config!.optionWidget!
+              optionWidget!
             ],
-            if (config?.optionWidget == null && onTapButton != null) ...[
+            if (optionWidget == null && onTapButton != null) ...[
               SizedBox(
                 height: titleOptionAreaSpacing,
               ),
@@ -236,9 +268,8 @@ class _EmptyOperationButton extends StatelessWidget {
   }) : super(key: key);
 
   /// 按钮的背景颜色
-  MaterialStateProperty<Color?>? _getButtonBgColor(
-      FNUIEmptyWidgetConfigure? config) {
-    Color buttonColor = config?.buttonBackgroundColor ?? FNColors.mainColor;
+  MaterialStateProperty<Color?>? _getButtonBgColor(FNEmptyThemeData? config) {
+    Color buttonColor = config?.buttonBackgroundColor ?? FNColors.primary;
     return MaterialStateProperty.resolveWith((states) {
       if (states.contains(MaterialState.pressed)) {
         return buttonColor.withOpacity(0.8);
@@ -248,11 +279,11 @@ class _EmptyOperationButton extends StatelessWidget {
   }
 
   /// 按钮样式配置
-  ButtonStyle buttonStyle(FNUIEmptyWidgetConfigure? config) {
+  ButtonStyle buttonStyle(FNEmptyThemeData config) {
     return ButtonStyle(
       backgroundColor: _getButtonBgColor(config),
       padding: MaterialStatePropertyAll(
-        config?.buttonPadding ??
+        config.buttonPadding ??
             const EdgeInsets.symmetric(
               horizontal: 8,
               vertical: 6,
@@ -261,7 +292,7 @@ class _EmptyOperationButton extends StatelessWidget {
       shape: MaterialStatePropertyAll(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(config?.buttonRadius ?? 4),
+            Radius.circular(config.btnRadius),
           ),
         ),
       ),
@@ -270,19 +301,19 @@ class _EmptyOperationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FNUIEmptyWidgetConfigure? config = FNUIEmptyWidgetConfigure.of(context);
+    FNEmptyThemeData config = FNEmptyTheme.of(context);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
-          width: config?.buttonSize?.width,
-          height: config?.buttonSize?.height,
+          width: config.buttonSize.width,
+          height: config.buttonSize.height,
           child: TextButton(
             onPressed: cb,
             style: buttonStyle(config),
             child: Text(
               title ?? '',
-              style: config?.buttonTextStyle ?? textStyle,
+              style: config.buttonTextStyle,
             ),
           ),
         ),
@@ -291,63 +322,63 @@ class _EmptyOperationButton extends StatelessWidget {
   }
 }
 
-/*
-* @description: 对EmptyWidget扩展的配置
-* @param:
-* @return:
-* @author: Ethan Zhu
-* @time: 2023-07-25 14:16:11 星期二
-*/
-/// 使用方式：
-/// SMUIEmptyWidgetConfigure(
-///   buttonSize: Size(200, 100),
-///   child: SMUIEmptyWidget(..)
-/// )
-class FNUIEmptyWidgetConfigure extends InheritedWidget {
-  /// 按钮的padding
-  final EdgeInsetsGeometry? buttonPadding;
-
-  /// 按钮背景颜色
-  final Color? buttonBackgroundColor;
-
-  /// 按钮边框弧度
-  final double? buttonRadius;
-
-  /// 按钮尺寸
-  final Size? buttonSize;
-
-  /// 按钮文字样式
-  final TextStyle? buttonTextStyle;
-
-  /// 自定义占位组件（优先级高于预设）
-  final Widget? placeHolderWidget;
-
-  /// 自定义title组件（优先级高于预设）
-  final Widget? titleWidget;
-
-  /// 自定义操作区（优先级高于预设）
-  final Widget? optionWidget;
-
-  const FNUIEmptyWidgetConfigure({
-    required super.child,
-    super.key,
-    this.buttonPadding,
-    this.buttonBackgroundColor,
-    this.buttonRadius,
-    this.buttonSize,
-    this.buttonTextStyle,
-    this.placeHolderWidget,
-    this.titleWidget,
-    this.optionWidget,
-  });
-
-  @override
-  bool updateShouldNotify(covariant InheritedWidget oldWidget) {
-    return true;
-  }
-
-  static FNUIEmptyWidgetConfigure? of(BuildContext context) {
-    return context
-        .dependOnInheritedWidgetOfExactType<FNUIEmptyWidgetConfigure>();
-  }
-}
+// /*
+// * @description: 对EmptyWidget扩展的配置
+// * @param:
+// * @return:
+// * @author: Ethan Zhu
+// * @time: 2023-07-25 14:16:11 星期二
+// */
+// /// 使用方式：
+// /// SMUIEmptyWidgetConfigure(
+// ///   buttonSize: Size(200, 100),
+// ///   child: SMUIEmptyWidget(..)
+// /// )
+// class FNUIEmptyWidgetConfigure extends InheritedWidget {
+//   /// 按钮的padding
+//   final EdgeInsetsGeometry? buttonPadding;
+//
+//   /// 按钮背景颜色
+//   final Color? buttonBackgroundColor;
+//
+//   /// 按钮边框弧度
+//   final double? buttonRadius;
+//
+//   /// 按钮尺寸
+//   final Size? buttonSize;
+//
+//   /// 按钮文字样式
+//   final TextStyle? buttonTextStyle;
+//
+//   /// 自定义占位组件（优先级高于预设）
+//   final Widget? placeHolderWidget;
+//
+//   /// 自定义title组件（优先级高于预设）
+//   final Widget? titleWidget;
+//
+//   /// 自定义操作区（优先级高于预设）
+//   final Widget? optionWidget;
+//
+//   const FNUIEmptyWidgetConfigure({
+//     required super.child,
+//     super.key,
+//     this.buttonPadding,
+//     this.buttonBackgroundColor,
+//     this.buttonRadius,
+//     this.buttonSize,
+//     this.buttonTextStyle,
+//     this.placeHolderWidget,
+//     this.titleWidget,
+//     this.optionWidget,
+//   });
+//
+//   @override
+//   bool updateShouldNotify(covariant InheritedWidget oldWidget) {
+//     return true;
+//   }
+//
+//   static FNUIEmptyWidgetConfigure? of(BuildContext context) {
+//     return context
+//         .dependOnInheritedWidgetOfExactType<FNUIEmptyWidgetConfigure>();
+//   }
+// }

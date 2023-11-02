@@ -2,10 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../../third_lib/auto_size_text/auto_size_text.dart';
-
-import '../../constant/colors.dart';
-import '../../constant/fonts.dart';
+import 'package:fn_ui_kit/fn_ui_kit.dart';
 
 enum FontFamilyType {
   // 系统自带
@@ -177,7 +174,7 @@ class FNUIText extends StatelessWidget {
       case FontFamilyType.numRegular:
         return TextStyle(
           shadows: shadows ?? [],
-          color: color ?? FNColors.fontMain,
+          color: color ?? FNColors.textColor,
           fontSize: fontSize ?? FNFontSize14,
           fontWeight: fontWeight ?? FontWeight.normal,
           fontFamily: "DINRegular",
@@ -187,7 +184,7 @@ class FNUIText extends StatelessWidget {
       case FontFamilyType.numMedium:
         return TextStyle(
           shadows: shadows ?? [],
-          color: color ?? FNColors.fontMain,
+          color: color ?? FNColors.textColor,
           fontSize: fontSize ?? FNFontSize14,
           fontWeight: fontWeight ?? FontWeight.normal,
           fontFamily: "DINMedium",
@@ -197,7 +194,7 @@ class FNUIText extends StatelessWidget {
       case FontFamilyType.numBold:
         return TextStyle(
           shadows: shadows ?? [],
-          color: color ?? FNColors.fontMain,
+          color: color ?? FNColors.textColor,
           fontSize: fontSize ?? FNFontSize14,
           fontWeight: fontWeight ?? FontWeight.normal,
           fontFamily: "DINBold",
@@ -207,7 +204,7 @@ class FNUIText extends StatelessWidget {
       default:
         return TextStyle(
           shadows: shadows ?? [],
-          color: color ?? FNColors.fontMain,
+          color: color ?? FNColors.textColor,
           fontSize: fontSize ?? FNFontSize14,
           fontWeight: fontWeight ?? FontWeight.w400,
           fontFamily: fontFamily ??

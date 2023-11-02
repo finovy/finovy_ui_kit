@@ -2,9 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fn_ui_kit/src/third_lib/export.dart';
-
-import '../../constant/export.dart';
+import 'package:fn_ui_kit/fn_ui_kit.dart';
 
 /*
 * @description:     验证码输入组件（支持三种样式、自动填充、自动焦点）
@@ -25,7 +23,7 @@ class FNUIVerifyCodeInput extends StatelessWidget {
   final TextStyle? pastedTextStyle;
 
   /// 验证码的预设长度（默认6）
-  final int length;
+  final int? length;
 
   /// 输入的格式验证列表
   final List<TextInputFormatter>? inputFormatters;
@@ -52,7 +50,7 @@ class FNUIVerifyCodeInput extends StatelessWidget {
   final FormFieldValidator? validator;
 
   /// 错误信息与输入框的距离
-  final double errorTextSpace;
+  final double? errorTextSpace;
 
   /// 单元格样式主题
   final PinTheme? pinTheme;
@@ -96,7 +94,7 @@ class FNUIVerifyCodeInput extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   const FNUIVerifyCodeInput({
     super.key,
-    required this.length,
+    this.length,
     this.textStyle,
     this.errorTextStyle,
     this.pastedTextStyle,
@@ -108,7 +106,7 @@ class FNUIVerifyCodeInput extends StatelessWidget {
     this.blinkWhenObscuring,
     this.animationType,
     this.validator,
-    this.errorTextSpace = 0.0,
+    this.errorTextSpace,
     this.pinTheme,
     this.cursorColor,
     this.animationDuration,
@@ -126,53 +124,34 @@ class FNUIVerifyCodeInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FNVerifyCodeThemeData themeData = FNVerifyCodeTheme.of(context);
     return PinCodeTextField(
       enabled: enable ?? true,
       appContext: context,
-      textStyle: textStyle ??
-          TextStyle(
-              fontSize: FNFontSize14,
-              fontWeight: FontWeight.w400,
-              color: FNColors.fontMain),
+      textStyle: textStyle ?? themeData.textStyle,
       errorTextStyle: errorTextStyle,
-      pastedTextStyle: pastedTextStyle ??
-          TextStyle(
-              fontSize: FNFontSize14,
-              fontWeight: FontWeight.w400,
-              color: FNColors.fontMain),
-      length: length,
-      inputFormatters: inputFormatters ?? [],
-      errorTextSpace: errorTextSpace,
-      autoFocus: autoFocus ?? true,
-      obscureText: obscureText ?? false,
-      obscuringCharacter: obscuringCharacter ?? '*',
+      pastedTextStyle: pastedTextStyle ?? themeData.pastedTextStyle,
+      length: length ?? themeData.length,
+      inputFormatters: inputFormatters ?? themeData.inputFormatters,
+      errorTextSpace: errorTextSpace ?? themeData.errorTextSpace,
+      autoFocus: autoFocus ?? themeData.autoFocus,
+      obscureText: obscureText ?? themeData.obscureText,
+      obscuringCharacter: obscuringCharacter ?? themeData.obscuringCharacter,
       obscuringWidget: obscuringWidget,
-      blinkWhenObscuring: blinkWhenObscuring ?? true,
-      animationType: animationType ?? AnimationType.fade,
+      blinkWhenObscuring: blinkWhenObscuring ?? themeData.blinkWhenObscuring,
+      animationType: animationType ?? themeData.animationType,
       validator: (v) {
-        // if (v!.length < 3) {
-        //   return "I'm from validator";
-        // } else {
-        //   return null;
-        // }
         String? value = validator?.call(v);
         return value;
       },
-      pinTheme: pinTheme ?? const PinTheme.defaults(),
-      cursorColor: cursorColor ?? Colors.black,
-      animationDuration: animationDuration ?? const Duration(milliseconds: 300),
-      enableActiveFill: enableActiveFill ?? true,
+      pinTheme: pinTheme ?? themeData.pinTheme,
+      cursorColor: cursorColor ?? themeData.cursorColor,
+      animationDuration: animationDuration ?? themeData.animationDuration,
+      enableActiveFill: enableActiveFill ?? themeData.enableActiveFill,
       errorAnimationController: errorAnimationController,
       controller: controller,
-      keyboardType: keyboardType ?? TextInputType.number,
-      boxShadows: boxShadows ??
-          const [
-            BoxShadow(
-              offset: Offset(0, 1),
-              color: Colors.black12,
-              blurRadius: 10,
-            )
-          ],
+      keyboardType: keyboardType ?? themeData.keyboardType,
+      boxShadows: boxShadows ?? themeData.boxShadows,
       onCompleted: (v) {
         debugPrint("Completed");
         onCompleted?.call(v);

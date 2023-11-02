@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import '../constant/colors.dart';
+import 'package:fn_ui_kit/fn_ui_kit.dart';
 
 ////////////////////////////// 状态栏+导航栏 //////////////////////////////
 class FNUIAppbar extends StatelessWidget implements PreferredSizeWidget {
@@ -9,13 +8,13 @@ class FNUIAppbar extends StatelessWidget implements PreferredSizeWidget {
   final Widget titleWidget;
 
   /// 从外部指定高度
-  final double contentHeight;
+  final double? contentHeight;
 
   ///内边距
   final EdgeInsets? padding;
 
   /// 设置导航栏背景的颜色
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   /// 左侧按钮
   final Widget? leftWidget;
@@ -24,7 +23,7 @@ class FNUIAppbar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? rightWidget;
 
   /// 是否显示阴影
-  final bool showShadow;
+  final bool? showShadow;
 
   /// 状态栏样式
   final SystemUiOverlayStyle style;
@@ -33,31 +32,32 @@ class FNUIAppbar extends StatelessWidget implements PreferredSizeWidget {
     Key? key,
     this.leftWidget,
     required this.titleWidget,
-    this.contentHeight = 44,
+    this.contentHeight,
     this.padding,
-    this.backgroundColor = Colors.white,
+    this.backgroundColor,
     this.rightWidget,
-    this.showShadow = false,
+    this.showShadow,
     this.style = SystemUiOverlayStyle.dark,
   }) : super(key: key);
 
   @override
-  Size get preferredSize => Size.fromHeight(contentHeight);
+  Size get preferredSize => Size.fromHeight(contentHeight ?? 44.0);
 
   @override
   Widget build(BuildContext context) {
+    FNAppbarThemeData contextThemeData = FNAppbarTheme.of(context);
     return Container(
-      color: backgroundColor,
+      color: backgroundColor ?? contextThemeData.backgroundColor,
       child: AnnotatedRegion<SystemUiOverlayStyle>(
         value: style,
         child: SafeArea(
           top: true,
           child: Container(
-            height: contentHeight,
-            padding: padding ?? const EdgeInsets.symmetric(horizontal: 16),
-            decoration: showShadow
+            height: contentHeight ?? contextThemeData.contentHeight,
+            padding: padding ?? contextThemeData.padding,
+            decoration: showShadow ?? contextThemeData.showShadow
                 ? BoxDecoration(
-                    color: FNColors.mainColor,
+                    color: FNColors.primary,
                     boxShadow: [
                       BoxShadow(
                         color: FNColors.shadow,

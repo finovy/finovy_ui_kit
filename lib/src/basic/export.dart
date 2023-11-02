@@ -1,9 +1,11 @@
-export 'button/button_style.dart';
-export 'button/normal.dart';
+// export 'button/button_style.dart';
+// export 'button/normal.dart';
+export 'button/button.dart';
 export 'image/icon.dart';
 export 'image/image.dart';
 export 'input/password.dart';
 export 'input/normal.dart';
 export 'text/normal.dart';
 export 'text/expand.dart';
+export 'text/tag.dart';
 export 'page/base.dart';

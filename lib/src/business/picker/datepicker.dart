@@ -10,12 +10,12 @@ import 'package:fn_ui_kit/fn_ui_kit.dart';
 * @time:            2023/6/2 14:04
 */
 class FNUIDatePicker {
-  static const String fyyyyMMdd = "yyyy-MM-dd";
-  static const String fyyyyMMddHHmmss = "yyyy-MM-dd HH:mm:ss";
-  static const String fyyyy = "yyyy";
-  static const String fHHmmss = "HH:mm:ss";
-  static const String fhhmmpp = "hh:mm am";
-  static const String fHHmm = "HH:mm";
+  static const String yyyyMMdd = "yyyy-MM-dd";
+  static const String yyyyMMddHHmmss = "yyyy-MM-dd HH:mm:ss";
+  static const String yyyy = "yyyy";
+  static const String HHmmss = "HH:mm:ss";
+  static const String hhmmpp = "hh:mm am";
+  static const String HHmm = "HH:mm";
 
   /*
   * @description:     自定义显示时间
@@ -34,7 +34,7 @@ class FNUIDatePicker {
       int minuteInterval = 1,
       CupertinoDatePickerMode mode = CupertinoDatePickerMode.date,
       DatePickerDateOrder dateOrder = DatePickerDateOrder.ymd,
-      String format = FNUIDatePicker.fyyyyMMdd,
+      String format = FNUIDatePicker.yyyyMMdd,
       bool use24hFormat = true,
       double sheetHeight = 265.0,
       Color sheetBackgroundColor = Colors.white,
@@ -52,7 +52,7 @@ class FNUIDatePicker {
       Function(DateTime dateTime)? onConfirm}) {
     DateTime currentTime = DateTime.now();
     showModalBottomSheet(
-        context: context ?? FNDesignContext.buildContext,
+        context: context,
         isScrollControlled: isScrollControlled,
         backgroundColor: sheetBackgroundColor,
         shape: shape,
@@ -71,20 +71,20 @@ class FNUIDatePicker {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         FNUIButton(
-                          size: const Size(60, 26),
-                          status: ButtonStatus.available,
+                          size: FNButtonSize.normal,
+                          type: FNButtonType.normal,
+                          border: false,
                           text: cancelLabel,
-                          buttonType: ButtonType.text,
                           onTap: () {
                             Navigator.pop(context);
                             onCancel?.call();
                           },
                         ),
                         FNUIButton(
-                          size: const Size(60, 26),
-                          status: ButtonStatus.available,
+                          size: FNButtonSize.normal,
+                          type: FNButtonType.normal,
+                          border: false,
                           text: confirmLabel,
-                          buttonType: ButtonType.text,
                           onTap: () {
                             Navigator.pop(context);
                             onConfirm?.call(currentTime);

@@ -1,114 +1,116 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-/// 依赖于插件 ionicons
-///
-/// ```
-///
-/// 相关文本组件如下:
-///  * [SMText], 基础的文本组件
-///
-///
 class FNUIIcon extends StatelessWidget {
-  /// 外边距
-  final EdgeInsets? margin;
-
-  /// 内边距
-  final EdgeInsets? padding;
-
-  /// icon的大小
-  final double size;
-
-  /// icon的样式
-  final IconData data;
-
-  /// icon的颜色
-  final Color color;
-
-  /// icon的文本
-  final String? text;
-
-  /// icon的文本颜色
-  final Color textColor;
-
-  /// icon的字体大小
-  final double fontSize;
-
-  /// icon的字重
-  final FontWeight fontWeight;
-
-  /// icon的点击事件
-  final Function? onTap;
-
   const FNUIIcon({
     Key? key,
-    this.margin,
-    this.padding,
-    this.size = 20,
-    required this.data,
-    this.color = Colors.black,
-    this.text,
-    this.textColor = Colors.black,
-    this.fontSize = 14,
-    this.fontWeight = FontWeight.normal,
-    this.onTap,
+    this.iconName,
+    this.iconUrl,
+    this.size,
+    this.color,
+    this.isPlain = false,
+    this.onClick,
+    this.package,
   }) : super(key: key);
+
+  const FNUIIcon.name(
+    this.iconName, {
+    Key? key,
+    this.size,
+    this.color,
+    this.isPlain = false,
+    this.onClick,
+    this.package,
+  })  : iconUrl = null,
+        super(key: key);
+
+  const FNUIIcon.url(
+    this.iconUrl, {
+    Key? key,
+    this.size,
+    this.color,
+    this.isPlain = false,
+    this.onClick,
+    this.package,
+  })  : iconName = null,
+        super(key: key);
+
+  // ****************** Props ******************
+  /// 图标名称
+  final IconData? iconName;
+
+  /// 图片链接
+  final String? iconUrl;
+
+  /// 图标颜色
+  final Color? color;
+
+  /// 图标大小
+  final double? size;
+
+  /// 资源所属包
+  final String? package;
+
+  /// 是否需要装饰
+  final bool isPlain;
+  // ****************** Events ******************
+  /// 点击图标时触发
+  final GestureTapCallback? onClick;
+
+  // ****************** Slots ******************
 
   @override
   Widget build(BuildContext context) {
-    return onTap != null ? _getGestureWidget() : _getNoGestureWidget();
+    return GestureDetector(
+      onTap: onClick,
+      child: _buildIcon(context),
+    );
   }
 
-  Widget _getGestureWidget() {
-    return text != null
-        ? GestureDetector(
-            onTap: () => onTap!(),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: padding,
-                  margin: margin,
-                  child: Icon(data, size: size, color: color),
-                ),
-                Text(
-                  text!,
-                  style: TextStyle(
-                      color: color, fontSize: fontSize, fontWeight: fontWeight),
-                ),
-              ],
-            ),
-          )
-        : GestureDetector(
-            onTap: () => onTap!(),
-            child: Container(
-              padding: padding,
-              margin: margin,
-              child: Icon(data, size: size, color: color),
-            ),
-          );
+  // 构建图片图标
+  Widget? _buildIcon(BuildContext context) {
+    final IconThemeData iconTheme = IconTheme.of(context);
+    final double? iconSize = size ?? iconTheme.size;
+
+    if (iconName != null) {
+      return Icon(
+        iconName,
+        color: isPlain ? null : (color ?? iconTheme.color),
+        size: iconSize,
+      );
+    }
+
+    if (iconUrl != null) {
+      final bool isNetWork = RegExp('^https?:\/\/').hasMatch(iconUrl!);
+
+      if (isNetWork) {
+        return Image.network(
+          iconUrl!,
+          color: color, //?? textStyle.color,
+          width: iconSize,
+          height: iconSize,
+          fit: BoxFit.scaleDown,
+        );
+      }
+
+      return Image.asset(
+        iconUrl!,
+        color: color, //?? textStyle.color,
+        width: iconSize,
+        height: iconSize,
+        fit: BoxFit.scaleDown,
+        package: package,
+      );
+    }
+    return null;
   }
 
-  Widget _getNoGestureWidget() {
-    return text != null
-        ? Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: padding,
-                margin: margin,
-                child: Icon(data, size: size, color: color),
-              ),
-              Text(
-                text!,
-                style: TextStyle(
-                    color: color, fontSize: fontSize, fontWeight: fontWeight),
-              ),
-            ],
-          )
-        : Container(
-            padding: padding,
-            margin: margin,
-            child: Icon(data, size: size, color: color),
-          );
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty<IconData>('iconName', iconName));
+    properties.add(DiagnosticsProperty<String>('iconUrl', iconUrl));
+    properties.add(DiagnosticsProperty<double>('size', size));
+    properties.add(DiagnosticsProperty<Color>('color', color));
+    super.debugFillProperties(properties);
   }
 }

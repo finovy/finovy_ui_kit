@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fn_ui_kit/fn_ui_kit.dart';
+
 import '../../res/lib_res.dart';
-import '../constant/colors.dart';
-import '../theme/index.dart';
 
 ///单选框 or 复选框类型
 enum FNUICheckBoxType {
@@ -118,11 +118,9 @@ class _FNUICheckBoxState extends State<FNUICheckBox> {
               padding: EdgeInsets.only(
                   left: widget.padding?.left ?? 16,
                   right: widget.padding?.right ?? 16),
-              child: Divider(
+              child: const Divider(
                 height: 0.5,
-                color: FNThemeManager
-                        .instance.themeData.otherConfig?.splitter_bg ??
-                    const Color(0xffeaeaea),
+                color: FNColors.splitLineColor,
               ),
             );
           },
@@ -147,10 +145,7 @@ class _FNUICheckBoxState extends State<FNUICheckBox> {
             child: Text(
               widget.actions[index].toString(),
               style: TextStyle(
-                  color: widget.textColor ??
-                      (FNThemeManager.instance.theme == FNThemeType.light
-                          ? FNColors.mainColor
-                          : FNColors.fontMain),
+                  color: widget.textColor ?? FNColors.primary,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   height: 1.5),
@@ -190,7 +185,7 @@ class _FNUICheckBoxState extends State<FNUICheckBox> {
             child: Text(
               widget.actions[index].toString(),
               style: TextStyle(
-                  color: widget.textColor ?? FNColors.fontMain,
+                  color: widget.textColor ?? FNColors.textColor,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   height: 1.5),

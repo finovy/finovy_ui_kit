@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../basic/image/image.dart';
-import '../constant/colors.dart';
-import '../constant/fonts.dart';
-import '../constant/images.dart';
+import 'package:fn_ui_kit/fn_ui_kit.dart';
 
 class FNUISearch extends StatefulWidget {
   /// 提示文字
@@ -86,7 +82,7 @@ class CommonSearchNavBarState extends State<FNUISearch> {
   late FocusNode _focusNode;
 
   ///监听TextField内容变化
-  final TextEditingController _defaultTextEditContrller =
+  final TextEditingController _defaultTextEditController =
       TextEditingController();
 
   ///默认不展示控件
@@ -100,16 +96,16 @@ class CommonSearchNavBarState extends State<FNUISearch> {
   void initState() {
     super.initState();
     _focusNode = FocusNode();
-    _defaultTextEditContrller.addListener(() {
+    _defaultTextEditController.addListener(() {
       if (widget.onInputTextChangeCallback != null) {
-        widget.onInputTextChangeCallback!(_defaultTextEditContrller.text);
+        widget.onInputTextChangeCallback!(_defaultTextEditController.text);
       }
-      var isVisible = _defaultTextEditContrller.text.isNotEmpty;
+      var isVisible = _defaultTextEditController.text.isNotEmpty;
       _updateDelIconVisible(isVisible);
     });
 
     if (widget.onInitTextCallBack != null) {
-      widget.onInitTextCallBack!(_defaultTextEditContrller, _focusNode);
+      widget.onInitTextCallBack!(_defaultTextEditController, _focusNode);
     }
     if (widget.onFocusCallback != null) {
       _focusNode
@@ -142,7 +138,7 @@ class CommonSearchNavBarState extends State<FNUISearch> {
                   child: TextField(
                     textAlignVertical: TextAlignVertical.center,
                     textAlign: widget.textAlign ?? TextAlign.center,
-                    controller: _defaultTextEditContrller,
+                    controller: _defaultTextEditController,
                     autofocus: widget.autoFocus,
                     focusNode: _focusNode,
                     cursorColor: FNColors.hexColor(0x6385ff),
@@ -152,9 +148,9 @@ class CommonSearchNavBarState extends State<FNUISearch> {
                               padding:
                                   const EdgeInsets.only(left: 24, right: 8),
                               child: widget.searchWidget ??
-                                  Icon(
+                                  const Icon(
                                     Icons.search,
-                                    color: FNColors.fontTips,
+                                    color: FNColors.textTipColor,
                                   ),
                             )
                           : null,
@@ -183,7 +179,7 @@ class CommonSearchNavBarState extends State<FNUISearch> {
                   offstage: _offstage,
                   child: GestureDetector(
                     onTap: () {
-                      _defaultTextEditContrller.clear();
+                      _defaultTextEditController.clear();
                       if (widget.onClearCallback != null) {
                         widget.onClearCallback!();
                       }
@@ -202,15 +198,15 @@ class CommonSearchNavBarState extends State<FNUISearch> {
         GestureDetector(
           onTap: () {
             _focusNode.unfocus();
-            if (widget.onCancelCallback != null) widget.onCancelCallback!();
+            widget.onCancelCallback?.call();
             // Get.back();
           },
           child: Container(
             padding: const EdgeInsets.only(left: 8, right: 16),
             child: Text(widget.cancelText ?? '',
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: FNFontSize16,
-                    color: FNColors.fontMain,
+                    color: FNColors.textColor,
                     fontWeight: FontWeight.w500)),
           ),
         ),

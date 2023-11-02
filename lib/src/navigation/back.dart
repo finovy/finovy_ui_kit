@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fn_ui_kit/fn_ui_kit.dart';
+
 import '../../res/lib_res.dart';
-import '../basic/export.dart';
-import '../business/export.dart';
-import '../constant/export.dart';
 
 const String defaultIconPath = 'icon_common_back.png';
 
@@ -37,7 +36,7 @@ class FNUINavBack extends StatelessWidget {
         defaultIconPath,
         width: size?.width ?? 24,
         height: size?.height ?? 24,
-        color: iconColor ?? FNColors.fontMain,
+        color: iconColor ?? FNColors.textColor,
         package: LibRes.PLUGIN_NAME,
       ),
     );

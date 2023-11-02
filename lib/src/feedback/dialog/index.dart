@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../basic/text/normal.dart';
-import '../../constant/colors.dart';
+import 'package:fn_ui_kit/fn_ui_kit.dart';
 import '../../third_lib/animations/modal.dart';
 
 class FNDialog {
@@ -121,7 +119,7 @@ class FNDialog {
                             style: TextStyle(
                               color: index == 0
                                   ? FNColors.hexColor(0x999999)
-                                  : confirmColor ?? FNColors.mainColor,
+                                  : confirmColor ?? FNColors.primary,
                               fontSize: 15.0,
                             ),
                           ),

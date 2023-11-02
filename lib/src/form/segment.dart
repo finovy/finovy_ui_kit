@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../basic/text/normal.dart';
-import '../constant/colors.dart';
+import 'package:fn_ui_kit/fn_ui_kit.dart';
 
 class FNUISegment extends StatelessWidget {
   final EdgeInsets? margin;
@@ -47,8 +45,8 @@ class FNUISegment extends StatelessWidget {
                   child: FNUIText(
                     text: titles[index],
                     color: currentIndex == index
-                        ? FNColors.fontMain
-                        : FNColors.fontNormal,
+                        ? FNColors.textColor
+                        : FNColors.textSecondaryColor,
                   ),
                 ),
               ),

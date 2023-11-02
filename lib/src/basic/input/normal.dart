@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fn_ui_kit/src/theme/export.dart';
 import '../../constant/export.dart';
 
 /// 自带删除的TextField
@@ -381,7 +382,7 @@ class _FNTextField extends State<FNUITextField> {
     }
     return Theme(
       data: Theme.of(context).copyWith(
-        disabledColor: FNColors.color_ff252525,
+        disabledColor: FNColors.textColor,
       ),
       child: TextField(
         enabled: widget.enabled,
@@ -394,8 +395,8 @@ class _FNTextField extends State<FNUITextField> {
           isDense: true,
           contentPadding: widget.contentPadding,
           hintStyle: widget.hintStyle ??
-              TextStyle(
-                color: FNColors.fontTips,
+              const TextStyle(
+                color: FNColors.textExplainColor,
                 fontSize: FNFontSize14,
               ),
           counterText: '',
@@ -434,8 +435,8 @@ class _FNTextField extends State<FNUITextField> {
         inputFormatters: _getTextInputFormatter()
           ..addAll(widget.formatter ?? []),
         style: widget.textStyle ??
-            TextStyle(
-              color: FNColors.fontMain,
+            const TextStyle(
+              color: FNColors.textColor,
               fontSize: FNFontSize14,
             ),
         obscureText: widget.obscureText ?? _isPassword,

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import '../basic/export.dart';
-import '../constant/export.dart';
-import 'appbar.dart';
-import 'back.dart';
+import 'package:fn_ui_kit/fn_ui_kit.dart';
 
 class FNUIScaffold extends StatelessWidget {
   /// AppBar
@@ -70,33 +66,35 @@ class FNUIScaffold extends StatelessWidget {
     this.title,
     this.titleWidget,
     required this.child,
-    this.showShadow = false,
-    this.color = Colors.white,
-    this.fontSize = 17.0,
-    this.fontWeight = FontWeight.bold,
+    this.showShadow,
+    this.color,
+    this.fontSize,
+    this.fontWeight,
     this.backgroundColor,
     this.navBarColor,
     this.leftWidget,
     this.leftCallback,
     this.rightWidget,
     this.style,
-    this.contentHeight = 44,
+    this.contentHeight,
     this.context,
     this.bottomNavigationBar,
-    this.resizeToAvoidBottomInset = false,
+    this.resizeToAvoidBottomInset,
     this.leftDrawer,
     this.rightDrawer,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    FNScaffoldThemeData contextThemeData = FNScaffoldTheme.of(context);
     return Scaffold(
-      appBar: _getAppBarWidget(),
+      appBar: _getAppBarWidget(context),
       body: child,
       bottomNavigationBar: bottomNavigationBar,
-      backgroundColor: backgroundColor ?? FNColors.background,
+      backgroundColor: backgroundColor ?? contextThemeData.backgroundColor,
       //设置键盘弹起不顶起下方组件
-      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+      resizeToAvoidBottomInset:
+          resizeToAvoidBottomInset ?? contextThemeData.resizeToAvoidBottomInset,
       drawer: leftDrawer,
       endDrawer: rightDrawer,
       drawerEnableOpenDragGesture: false,
@@ -104,30 +102,31 @@ class FNUIScaffold extends StatelessWidget {
     );
   }
 
-  FNUIAppbar? _getAppBarWidget() {
+  FNUIAppbar? _getAppBarWidget(BuildContext context) {
     if (appBar != null) {
       return appBar;
     } else {
       if (titleWidget != null || titleWidget != null) {}
+      FNScaffoldThemeData contextThemeData = FNScaffoldTheme.of(context);
       return (titleWidget == null && title == null)
           ? null
           : FNUIAppbar(
               titleWidget: titleWidget ??
                   FNUIText(
                     text: title ?? '',
-                    fontSize: FNFontSize16,
-                    color: FNColors.fontMain,
-                    fontWeight: FontWeight.w600,
+                    fontSize: fontSize ?? contextThemeData.fontSize,
+                    color: FNColors.textColor,
+                    fontWeight: fontWeight ?? contextThemeData.fontWeight,
                   ),
               showShadow: showShadow ?? false,
-              style: style ?? SystemUiOverlayStyle.dark,
+              style: style ?? contextThemeData.style,
               leftWidget: leftWidget ??
                   FNUINavBack(
                     callBack: () => leftCallback?.call(),
                   ),
               rightWidget: rightWidget,
-              contentHeight: contentHeight ?? 44,
-              backgroundColor: navBarColor ?? FNColors.card,
+              contentHeight: contentHeight ?? contextThemeData.contentHeight,
+              backgroundColor: navBarColor ?? contextThemeData.backgroundColor,
             );
     }
   }

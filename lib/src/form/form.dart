@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fn_ui_kit/fn_ui_kit.dart';
+
 import '../../res/lib_res.dart';
-import '../basic/export.dart';
-import '../constant/colors.dart';
-import '../theme/base.dart';
-import '../theme/index.dart';
 
 /// 带输入框模式
 /// CommonInputWidget(
@@ -58,7 +56,7 @@ class FNUIForm extends StatefulWidget {
   final String? title;
 
   ///是否必填项
-  final bool required;
+  final bool? required;
 
   ///初始输入内容
   final String? inputText;
@@ -73,13 +71,13 @@ class FNUIForm extends StatefulWidget {
   final String? errorText;
 
   ///只读状态，在normal状态下有用，input类型无效
-  final bool readOnly;
+  final bool? readOnly;
 
   ///多行文本输入,最大输入长度,默认100
-  final int maxLength;
+  final int? maxLength;
 
   ///多行文本输入,输入框高度,默认110
-  final double textFieldHeight;
+  final double? textFieldHeight;
 
   ///点击箭头回调
   final Function? clickCallBack;
@@ -90,14 +88,14 @@ class FNUIForm extends StatefulWidget {
     this.margin,
     this.padding,
     this.title,
-    this.required = false,
+    this.required,
     this.inputText,
     this.inputHintText,
     this.fieldCallBack,
     this.errorText,
-    this.readOnly = false,
-    this.maxLength = 100,
-    this.textFieldHeight = 110.0,
+    this.readOnly,
+    this.maxLength,
+    this.textFieldHeight,
     this.clickCallBack,
   }) : super(key: key);
 
@@ -109,7 +107,6 @@ class _FNUIFormState extends State<FNUIForm> {
   String _inputText = '';
   int _textCount = 0;
   Function? _textCountSetState;
-  ThemeTextConfig? themeTextConfig;
 
   @override
   void initState() {
@@ -119,10 +116,10 @@ class _FNUIFormState extends State<FNUIForm> {
 
   @override
   Widget build(BuildContext context) {
-    themeTextConfig = FNThemeManager.instance.themeData.textConfig;
+    FNFormThemeData contextThemeData = FNFormTheme.of(context);
     return Container(
       margin: widget.margin,
-      padding: widget.padding ?? const EdgeInsets.symmetric(vertical: 18.0),
+      padding: widget.padding ?? contextThemeData.padding,
       color: FNColors.card,
       child: _getChildWidget(),
     );
@@ -154,6 +151,7 @@ class _FNUIFormState extends State<FNUIForm> {
    * @time: 2023/5/23 15:55
    */
   Widget _buildInputForm() {
+    FNFormThemeData contextThemeData = FNFormTheme.of(context);
     return Flex(
       direction: Axis.vertical,
       mainAxisSize: MainAxisSize.min,
@@ -163,7 +161,7 @@ class _FNUIFormState extends State<FNUIForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Visibility(
-              visible: widget.required,
+              visible: widget.required ?? contextThemeData.required,
               child: const FNUIText(
                 padding: EdgeInsets.only(top: 3),
                 text: '*',
@@ -177,8 +175,12 @@ class _FNUIFormState extends State<FNUIForm> {
               width: 120,
               padding: const EdgeInsets.only(right: 16),
               text: widget.title ?? '',
-              color: widget.readOnly ? FNColors.fontNormal : FNColors.fontMain,
-              fontWeight: widget.readOnly ? FontWeight.normal : FontWeight.bold,
+              color: widget.readOnly ?? contextThemeData.readOnly
+                  ? FNColors.textSecondaryColor
+                  : FNColors.textColor,
+              fontWeight: (widget.readOnly ?? contextThemeData.readOnly)
+                  ? FontWeight.normal
+                  : FontWeight.bold,
               fontSize: 16,
               maxLines: 2,
             ),
@@ -187,16 +189,18 @@ class _FNUIFormState extends State<FNUIForm> {
                   contentPadding: EdgeInsets.zero,
                   textAlign: TextAlign.start,
                   inputText: _inputText,
-                  textStyle: TextStyle(fontSize: 16, color: FNColors.fontMain),
+                  textStyle:
+                      const TextStyle(fontSize: 16, color: FNColors.textColor),
                   hintText: widget.inputHintText ?? '',
-                  hintStyle: TextStyle(fontSize: 16, color: FNColors.fontTips),
-                  cursorColor: FNColors.mainColor,
-                  enabled: !widget.readOnly,
+                  hintStyle: const TextStyle(
+                      fontSize: 16, color: FNColors.textTipColor),
+                  cursorColor: FNColors.primary,
+                  enabled: !(widget.readOnly ?? contextThemeData.readOnly),
                   fieldCallBack: (value) => widget.fieldCallBack?.call(value)),
             ),
             GestureDetector(
               onTap: () {
-                if (!widget.readOnly) {
+                if (!(widget.readOnly ?? contextThemeData.readOnly)) {
                   setState(() {
                     _inputText = '';
                   });
@@ -217,9 +221,9 @@ class _FNUIFormState extends State<FNUIForm> {
           visible: widget.errorText != null,
           child: Container(
             margin: const EdgeInsets.only(top: 18),
-            child: Divider(
+            child: const Divider(
               height: 0.5,
-              color: themeTextConfig?.warningColor ?? Color(0xFFee0a24),
+              color: FNColors.backgroundWarning,
             ),
           ),
         ),
@@ -228,7 +232,7 @@ class _FNUIFormState extends State<FNUIForm> {
           child: FNUIText(
             margin: const EdgeInsets.only(top: 8),
             text: widget.errorText ?? '',
-            color: themeTextConfig?.warningColor ?? Color(0xFFee0a24),
+            color: FNColors.backgroundWarning,
             fontSize: 12,
           ),
         ),
@@ -244,15 +248,16 @@ class _FNUIFormState extends State<FNUIForm> {
    * @time: 2023/5/23 15:56
    */
   Widget _buildNormalForm() {
+    FNFormThemeData contextThemeData = FNFormTheme.of(context);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Visibility(
-          visible: widget.required,
-          child: FNUIText(
+          visible: widget.required ?? contextThemeData.required,
+          child: const FNUIText(
             padding: EdgeInsets.only(top: 3),
             text: '*',
-            color: themeTextConfig?.warningColor ?? Color(0xFFee0a24),
+            color: FNColors.backgroundWarning,
             fontWeight: FontWeight.bold,
             fontSize: 16,
             alignment: Alignment.centerLeft,
@@ -262,15 +267,19 @@ class _FNUIFormState extends State<FNUIForm> {
           padding: const EdgeInsets.only(right: 16),
           width: 120,
           text: widget.title ?? '',
-          color: widget.readOnly ? FNColors.fontNormal : FNColors.fontMain,
-          fontWeight: widget.readOnly ? FontWeight.normal : FontWeight.bold,
+          color: widget.readOnly ?? contextThemeData.readOnly
+              ? FNColors.textSecondaryColor
+              : FNColors.textColor,
+          fontWeight: widget.readOnly ?? contextThemeData.readOnly
+              ? FontWeight.normal
+              : FontWeight.bold,
           fontSize: 16,
           maxLines: 2,
         ),
         Expanded(
           child: GestureDetector(
             onTap: () {
-              if (!widget.readOnly) {
+              if (!(widget.readOnly ?? contextThemeData.readOnly)) {
                 widget.clickCallBack?.call();
               }
             },
@@ -281,7 +290,7 @@ class _FNUIFormState extends State<FNUIForm> {
                   child: FNUIText(
                     text: _inputText,
                     fontSize: 16,
-                    color: FNColors.fontMain,
+                    color: FNColors.textColor,
                   ),
                 ),
                 Image.asset(
@@ -307,6 +316,7 @@ class _FNUIFormState extends State<FNUIForm> {
    * @time: 2023/5/23 15:57
    */
   _buildMultiLinesInputForm() {
+    FNFormThemeData contextThemeData = FNFormTheme.of(context);
     return Flex(
       direction: Axis.vertical,
       mainAxisSize: MainAxisSize.min,
@@ -318,12 +328,13 @@ class _FNUIFormState extends State<FNUIForm> {
               maxLength: widget.maxLength,
               textAlign: TextAlign.start,
               inputText: _inputText,
-              textStyle: TextStyle(
-                  fontSize: 14, color: FNColors.fontMain, height: 1.57),
+              textStyle: const TextStyle(
+                  fontSize: 14, color: FNColors.textColor, height: 1.57),
               hintText: widget.inputHintText ?? '',
-              hintStyle: TextStyle(fontSize: 14, color: FNColors.fontTips),
-              cursorColor: FNColors.mainColor,
-              enabled: !widget.readOnly,
+              hintStyle:
+                  const TextStyle(fontSize: 14, color: FNColors.textTipColor),
+              cursorColor: FNColors.primary,
+              enabled: !(widget.readOnly ?? contextThemeData.readOnly),
               fieldCallBack: (value) {
                 widget.fieldCallBack?.call(value);
                 _inputText = value;
@@ -343,12 +354,13 @@ class _FNUIFormState extends State<FNUIForm> {
                     text: '$_textCount',
                     style: TextStyle(
                         color: _textCount > 0
-                            ? FNColors.fontMain
-                            : FNColors.fontTips,
+                            ? FNColors.textColor
+                            : FNColors.textTipColor,
                         fontSize: 12)),
                 TextSpan(
                     text: '/${widget.maxLength}',
-                    style: TextStyle(color: FNColors.fontTips, fontSize: 12)),
+                    style: const TextStyle(
+                        color: FNColors.textTipColor, fontSize: 12)),
               ]));
             },
           ),
@@ -357,9 +369,9 @@ class _FNUIFormState extends State<FNUIForm> {
           visible: widget.errorText != null,
           child: Container(
             margin: const EdgeInsets.only(top: 10),
-            child: Divider(
+            child: const Divider(
               height: 0.5,
-              color: themeTextConfig?.warningColor ?? Color(0xFFee0a24),
+              color: FNColors.backgroundWarning,
             ),
           ),
         ),
@@ -368,7 +380,7 @@ class _FNUIFormState extends State<FNUIForm> {
           child: FNUIText(
             margin: const EdgeInsets.only(top: 8),
             text: widget.errorText ?? '',
-            color: themeTextConfig?.warningColor ?? Color(0xFFee0a24),
+            color: FNColors.backgroundWarning,
             fontSize: 12,
           ),
         ),
