@@ -1,0 +1,66 @@
+{
+  "themeClass": "FNButtonTheme",
+  "instanceName": "buttonTheme",
+  "className": "FNButtonThemeData",
+  "properties": [
+    {
+      "type": "double",
+      "value": "defaultHeight"
+    },
+    {
+      "type": "FontWeight",
+      "value": "defaultFontWeight"
+    },
+    {
+      "type": "double",
+      "value": "defaultFontSize"
+    },
+    {
+      "type": "Color",
+      "value": "textColor"
+    },
+    {
+      "type": "Color",
+      "value": "backgroundColor"
+    },
+    {
+      "type": "Color",
+      "value": "loadingTextColor"
+    },
+    {
+      "type": "Color",
+      "value": "disabledTextColor"
+    },
+    {
+      "type": "Color",
+      "value": "loadingDisabledTextColor"
+    },
+    {
+      "type": "Color",
+      "value": "disabledBackgroundColor"
+    },
+    {
+      "type": "Color",
+      "value": "pressedTextColor"
+    },
+    {
+      "type": "Color",
+      "value": "pressedBackgroundColor"
+    },
+    {
+      "type": "double",
+      "value": "borderWidth"
+    },
+
+    {
+      "type": "double",
+      "value": "borderRadius"
+    },
+    {
+      "type": "Color",
+      "value": "borderColor"
+    }
+
+  ]
+
+}

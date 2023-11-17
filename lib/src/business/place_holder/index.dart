@@ -115,6 +115,7 @@ class FNUIEmptyWidget extends StatelessWidget {
 
   /// 自定义操作区（优先级高于预设）
   final Widget? optionWidget;
+
   const FNUIEmptyWidget({
     super.key,
     required this.state,
@@ -260,6 +261,7 @@ class _EmptyOperationButton extends StatelessWidget {
 
   /// 按钮文字样式
   final TextStyle? textStyle;
+
   const _EmptyOperationButton({
     Key? key,
     this.title,
@@ -305,9 +307,11 @@ class _EmptyOperationButton extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox(
-          width: config.buttonSize.width,
-          height: config.buttonSize.height,
+        ConstrainedBox(
+          constraints: BoxConstraints(
+            minWidth: config.buttonSize.width,
+            minHeight: config.buttonSize.height,
+          ),
           child: TextButton(
             onPressed: cb,
             style: buttonStyle(config),

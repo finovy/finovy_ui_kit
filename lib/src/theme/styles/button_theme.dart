@@ -1,25 +1,14 @@
-import 'dart:ui';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fn_ui_kit/fn_ui_kit.dart';
+import 'package:flutter/services.dart';
 
-import '../theme.dart';
-import '../var.dart';
-
-/*
-* @description:     按钮类主题配置
-* param:
-* @return:
-* @author:          novice.cai
-* @time:            2023/10/25 12:12
-*/
 class FNButtonTheme extends InheritedTheme {
   const FNButtonTheme({
     Key? key,
     required this.data,
     required Widget child,
   }) : super(key: key, child: child);
-
   static Widget merge({
     Key? key,
     required FNButtonThemeData data,
@@ -60,241 +49,158 @@ class FNButtonTheme extends InheritedTheme {
 }
 
 class FNButtonThemeData with Diagnosticable {
+  final double defaultHeight;
+  final FontWeight defaultFontWeight;
+  final double defaultFontSize;
+  final Color textColor;
+  final Color backgroundColor;
+  final Color loadingTextColor;
+  final Color disabledTextColor;
+  final Color loadingDisabledTextColor;
+  final Color disabledBackgroundColor;
+  final Color pressedTextColor;
+  final Color pressedBackgroundColor;
+  final double borderWidth;
+  final double borderRadius;
+  final Color borderColor;
+
+  factory FNButtonThemeData.secondary() {
+    return FNButtonThemeData().copyWith(
+      textColor: FNColors.btnSecondaryTextColor,
+      backgroundColor: FNColors.btnSecondaryBackgroundColor,
+      loadingTextColor: FNColors.btnSecondaryLoadingTextColor,
+      disabledTextColor: FNColors.btnSecondaryDisabledTextColor,
+      loadingDisabledTextColor: FNColors.btnSecondaryDisabledTextColor,
+      disabledBackgroundColor: FNColors.btnSecondaryDisabledBackgroundColor,
+      pressedTextColor: FNColors.btnSecondaryPressedTextColor,
+      pressedBackgroundColor: FNColors.btnSecondaryPressedBackgroundColor,
+      borderWidth: FNColors.btnSecondaryBorderWidth,
+      borderRadius: FNColors.btnSecondaryBorderRadius,
+      borderColor: FNColors.btnSecondaryBorderColor,
+    );
+  }
+
+  factory FNButtonThemeData.hollowed() {
+    return FNButtonThemeData().copyWith(
+      textColor: FNColors.btnHollowedTextColor,
+      backgroundColor: FNColors.btnHollowedBackgroundColor,
+      loadingTextColor: FNColors.btnHollowedLoadingTextColor,
+      disabledTextColor: FNColors.btnHollowedDisabledTextColor,
+      loadingDisabledTextColor: FNColors.btnHollowedDisabledTextColor,
+      disabledBackgroundColor: FNColors.btnHollowedDisabledBackgroundColor,
+      pressedTextColor: FNColors.btnHollowedTextColor,
+      pressedBackgroundColor: FNColors.btnHollowedBackgroundColor,
+      borderWidth: FNColors.btnHollowedBorderWidth,
+      borderRadius: FNColors.btnHollowedBorderRadius,
+      borderColor: FNColors.btnHollowedBorderColor,
+    );
+  }
+
+  factory FNButtonThemeData.link() {
+    return FNButtonThemeData().copyWith(
+      textColor: FNColors.btnLinkTextColor,
+      backgroundColor: FNColors.btnLinkBackgroundColor,
+      loadingTextColor: FNColors.btnLinkLoadingTextColor,
+      disabledTextColor: FNColors.btnLinkDisabledTextColor,
+      loadingDisabledTextColor: FNColors.btnLinkDisabledTextColor,
+      disabledBackgroundColor: FNColors.btnLinkDisabledBackgroundColor,
+      pressedTextColor: FNColors.btnLinkTextColor,
+      pressedBackgroundColor: FNColors.btnLinkBackgroundColor,
+      borderWidth: FNColors.btnLinkBorderWidth,
+      borderRadius: FNColors.btnLinkBorderRadius,
+      borderColor: FNColors.btnLinkBorderColor,
+    );
+  }
+
   factory FNButtonThemeData({
-    double? miniHeight,
-    EdgeInsets? miniPadding,
-    double? miniFontSize,
-    double? smallHeight,
-    EdgeInsets? smallPadding,
-    double? smallFontSize,
-    EdgeInsets? normalPadding,
-    double? normalFontSize,
-    double? largeHeight,
     double? defaultHeight,
-    double? defaultLineHeight,
+    FontWeight? defaultFontWeight,
     double? defaultFontSize,
-    Color? defaultColor,
-    Color? defaultBackgroundColor,
-    Color? defaultBorderColor,
-    Color? primaryColor,
-    Color? primaryBackgroundColor,
-    Color? primaryBorderColor,
-    Color? successColor,
-    Color? successBackgroundColor,
-    Color? successBorderColor,
-    Color? dangerColor,
-    Color? dangerBackgroundColor,
-    Color? dangerBorderColor,
-    Color? warningColor,
-    Color? warningBackgroundColor,
-    Color? warningBorderColor,
+    Color? textColor,
+    Color? backgroundColor,
+    Color? loadingTextColor,
+    Color? disabledTextColor,
+    Color? loadingDisabledTextColor,
+    Color? disabledBackgroundColor,
+    Color? pressedTextColor,
+    Color? pressedBackgroundColor,
     double? borderWidth,
     double? borderRadius,
-    double? roundBorderRadius,
-    Color? plainBackgroundColor,
-    double? disabledOpacity,
-    double? iconSize,
-    double? loadingIconSize,
+    Color? borderColor,
   }) {
     return FNButtonThemeData.raw(
-      miniHeight: miniHeight ?? 24.0,
-      miniPadding: miniPadding ??
-          const EdgeInsets.symmetric(horizontal: FNColors.paddingBase),
-      miniFontSize: miniFontSize ?? FNColors.fontSizeXs,
-      smallHeight: smallHeight ?? 32.0,
-      smallPadding: smallPadding ??
-          const EdgeInsets.symmetric(horizontal: FNColors.paddingXs),
-      smallFontSize: smallFontSize ?? FNColors.fontSizeSm,
-      normalPadding:
-          normalPadding ?? const EdgeInsets.symmetric(horizontal: 15.0),
-      normalFontSize: normalFontSize ?? FNColors.fontSizeMd,
-      largeHeight: largeHeight ?? FNColors.buttonLargeHeight,
-      defaultHeight: defaultHeight ?? FNColors.buttonDefaultHeight,
-      defaultLineHeight: defaultLineHeight ?? FNColors.buttonDefaultLineHeight,
-      defaultFontSize: defaultFontSize ?? FNColors.fontSizeLg,
-      defaultColor: defaultColor ?? FNColors.buttonDefaultColor,
-      defaultBackgroundColor:
-          defaultBackgroundColor ?? FNColors.buttonDefaultBackgroundColor,
-      defaultBorderColor:
-          defaultBorderColor ?? FNColors.buttonDefaultBorderColor,
-      primaryColor: primaryColor ?? FNColors.buttonPrimaryColor,
-      primaryBackgroundColor:
-          primaryBackgroundColor ?? FNColors.buttonPrimaryBackgroundColor,
-      primaryBorderColor:
-          primaryBorderColor ?? FNColors.buttonPrimaryBorderColor,
-      successColor: successColor ?? FNColors.buttonSuccessColor,
-      successBackgroundColor:
-          successBackgroundColor ?? FNColors.buttonSuccessBackgroundColor,
-      successBorderColor:
-          successBorderColor ?? FNColors.buttonSuccessBorderColor,
-      dangerColor: dangerColor ?? FNColors.buttonDangerColor,
-      dangerBackgroundColor:
-          dangerBackgroundColor ?? FNColors.buttonDangerBackgroundColor,
-      dangerBorderColor: dangerBorderColor ?? FNColors.buttonDangerBorderColor,
-      warningColor: warningColor ?? FNColors.buttonWarningColor,
-      warningBackgroundColor:
-          warningBackgroundColor ?? FNColors.buttonWarningBackgroundColor,
-      warningBorderColor:
-          warningBorderColor ?? FNColors.buttonWarningBorderColor,
-      borderWidth: borderWidth ?? FNColors.buttonBorderWidth,
-      borderRadius: borderRadius ?? FNColors.buttonBorderRadius,
-      roundBorderRadius: roundBorderRadius ?? FNColors.buttonRoundBorderRadius,
-      plainBackgroundColor:
-          plainBackgroundColor ?? FNColors.buttonPlainBackgroundColor,
-      disabledOpacity: disabledOpacity ?? FNColors.buttonDisabledOpacity,
-      iconSize: iconSize ?? (FNColors.fontSizeLg * 1.2),
-      loadingIconSize: loadingIconSize ?? 20.0,
+      defaultHeight: defaultHeight ?? FNColors.btnDefaultHeight,
+      defaultFontWeight: defaultFontWeight ?? FontWeight.w500,
+      defaultFontSize: defaultFontSize ?? FNColors.btnDefaultFontSize,
+      textColor: textColor ?? FNColors.btnPrimaryTextColor,
+      backgroundColor: backgroundColor ?? FNColors.btnPrimaryBackgroundColor,
+      loadingTextColor: loadingTextColor ?? FNColors.btnPrimaryLoadingTextColor,
+      disabledTextColor:
+          disabledTextColor ?? FNColors.btnPrimaryDisabledTextColor,
+      loadingDisabledTextColor:
+          loadingDisabledTextColor ?? FNColors.btnPrimaryDisabledTextColor,
+      disabledBackgroundColor:
+          disabledBackgroundColor ?? FNColors.btnPrimaryDisabledBackgroundColor,
+      pressedTextColor: pressedTextColor ?? FNColors.btnPrimaryTextColor,
+      pressedBackgroundColor:
+          pressedBackgroundColor ?? FNColors.btnPrimaryPressedBackgroundColor,
+      borderWidth: borderWidth ?? FNColors.btnPrimaryBorderWidth,
+      borderRadius: borderRadius ?? FNColors.btnPrimaryBorderRadius,
+      borderColor: borderColor ?? FNColors.btnPrimaryBorderColor,
     );
   }
 
   const FNButtonThemeData.raw({
-    required this.miniHeight,
-    required this.miniPadding,
-    required this.miniFontSize,
-    required this.smallHeight,
-    required this.smallPadding,
-    required this.smallFontSize,
-    required this.normalPadding,
-    required this.normalFontSize,
-    required this.largeHeight,
     required this.defaultHeight,
-    required this.defaultLineHeight,
+    required this.defaultFontWeight,
     required this.defaultFontSize,
-    required this.defaultColor,
-    required this.defaultBackgroundColor,
-    required this.defaultBorderColor,
-    required this.primaryColor,
-    required this.primaryBackgroundColor,
-    required this.primaryBorderColor,
-    required this.successColor,
-    required this.successBackgroundColor,
-    required this.successBorderColor,
-    required this.dangerColor,
-    required this.dangerBackgroundColor,
-    required this.dangerBorderColor,
-    required this.warningColor,
-    required this.warningBackgroundColor,
-    required this.warningBorderColor,
+    required this.textColor,
+    required this.backgroundColor,
+    required this.loadingTextColor,
+    required this.disabledTextColor,
+    required this.loadingDisabledTextColor,
+    required this.disabledBackgroundColor,
+    required this.pressedTextColor,
+    required this.pressedBackgroundColor,
     required this.borderWidth,
     required this.borderRadius,
-    required this.roundBorderRadius,
-    required this.plainBackgroundColor,
-    required this.disabledOpacity,
-    required this.iconSize,
-    required this.loadingIconSize,
+    required this.borderColor,
   });
 
-  final double miniHeight;
-  final EdgeInsets miniPadding;
-  final double miniFontSize;
-  final double smallHeight;
-  final EdgeInsets smallPadding;
-  final double smallFontSize;
-  final EdgeInsets normalPadding;
-  final double normalFontSize;
-  final double largeHeight;
-  final double defaultHeight;
-  final double defaultLineHeight;
-  final double defaultFontSize;
-  final Color defaultColor;
-  final Color defaultBackgroundColor;
-  final Color defaultBorderColor;
-  final Color primaryColor;
-  final Color primaryBackgroundColor;
-  final Color primaryBorderColor;
-  final Color successColor;
-  final Color successBackgroundColor;
-  final Color successBorderColor;
-  final Color dangerColor;
-  final Color dangerBackgroundColor;
-  final Color dangerBorderColor;
-  final Color warningColor;
-  final Color warningBackgroundColor;
-  final Color warningBorderColor;
-  final double borderWidth;
-  final double borderRadius;
-  final double roundBorderRadius;
-  final Color plainBackgroundColor;
-  final double disabledOpacity;
-  final double iconSize;
-  final double loadingIconSize;
-
   FNButtonThemeData copyWith({
-    double? miniHeight,
-    EdgeInsets? miniPadding,
-    double? miniFontSize,
-    double? smallHeight,
-    EdgeInsets? smallPadding,
-    double? smallFontSize,
-    EdgeInsets? normalPadding,
-    double? normalFontSize,
-    double? largeHeight,
     double? defaultHeight,
-    double? defaultLineHeight,
+    FontWeight? defaultFontWeight,
     double? defaultFontSize,
-    Color? defaultColor,
-    Color? defaultBackgroundColor,
-    Color? defaultBorderColor,
-    Color? primaryColor,
-    Color? primaryBackgroundColor,
-    Color? primaryBorderColor,
-    Color? successColor,
-    Color? successBackgroundColor,
-    Color? successBorderColor,
-    Color? dangerColor,
-    Color? dangerBackgroundColor,
-    Color? dangerBorderColor,
-    Color? warningColor,
-    Color? warningBackgroundColor,
-    Color? warningBorderColor,
+    Color? textColor,
+    Color? backgroundColor,
+    Color? loadingTextColor,
+    Color? disabledTextColor,
+    Color? loadingDisabledTextColor,
+    Color? disabledBackgroundColor,
+    Color? pressedTextColor,
+    Color? pressedBackgroundColor,
     double? borderWidth,
     double? borderRadius,
-    double? roundBorderRadius,
-    Color? plainBackgroundColor,
-    double? disabledOpacity,
-    double? iconSize,
-    double? loadingIconSize,
+    Color? borderColor,
   }) {
     return FNButtonThemeData(
-      miniHeight: miniHeight ?? this.miniHeight,
-      miniPadding: miniPadding ?? this.miniPadding,
-      miniFontSize: miniFontSize ?? this.miniFontSize,
-      smallHeight: smallHeight ?? this.smallHeight,
-      smallPadding: smallPadding ?? this.smallPadding,
-      smallFontSize: smallFontSize ?? this.smallFontSize,
-      normalPadding: normalPadding ?? this.normalPadding,
-      normalFontSize: normalFontSize ?? this.normalFontSize,
-      largeHeight: largeHeight ?? this.largeHeight,
       defaultHeight: defaultHeight ?? this.defaultHeight,
-      defaultLineHeight: defaultLineHeight ?? this.defaultLineHeight,
+      defaultFontWeight: defaultFontWeight ?? this.defaultFontWeight,
       defaultFontSize: defaultFontSize ?? this.defaultFontSize,
-      defaultColor: defaultColor ?? this.defaultColor,
-      defaultBackgroundColor:
-          defaultBackgroundColor ?? this.defaultBackgroundColor,
-      defaultBorderColor: defaultBorderColor ?? this.defaultBorderColor,
-      primaryColor: primaryColor ?? this.primaryColor,
-      primaryBackgroundColor:
-          primaryBackgroundColor ?? this.primaryBackgroundColor,
-      primaryBorderColor: primaryBorderColor ?? this.primaryBorderColor,
-      successColor: successColor ?? this.successColor,
-      successBackgroundColor:
-          successBackgroundColor ?? this.successBackgroundColor,
-      successBorderColor: successBorderColor ?? this.successBorderColor,
-      dangerColor: dangerColor ?? this.dangerColor,
-      dangerBackgroundColor:
-          dangerBackgroundColor ?? this.dangerBackgroundColor,
-      dangerBorderColor: dangerBorderColor ?? this.dangerBorderColor,
-      warningColor: warningColor ?? this.warningColor,
-      warningBackgroundColor:
-          warningBackgroundColor ?? this.warningBackgroundColor,
-      warningBorderColor: warningBorderColor ?? this.warningBorderColor,
+      textColor: textColor ?? this.textColor,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      loadingTextColor: loadingTextColor ?? this.loadingTextColor,
+      disabledTextColor: disabledTextColor ?? this.disabledTextColor,
+      loadingDisabledTextColor:
+          loadingDisabledTextColor ?? this.loadingDisabledTextColor,
+      disabledBackgroundColor:
+          disabledBackgroundColor ?? this.disabledBackgroundColor,
+      pressedTextColor: pressedTextColor ?? this.pressedTextColor,
+      pressedBackgroundColor:
+          pressedBackgroundColor ?? this.pressedBackgroundColor,
       borderWidth: borderWidth ?? this.borderWidth,
       borderRadius: borderRadius ?? this.borderRadius,
-      roundBorderRadius: roundBorderRadius ?? this.roundBorderRadius,
-      plainBackgroundColor: plainBackgroundColor ?? this.plainBackgroundColor,
-      disabledOpacity: disabledOpacity ?? this.disabledOpacity,
-      iconSize: iconSize ?? this.iconSize,
-      loadingIconSize: loadingIconSize ?? this.loadingIconSize,
+      borderColor: borderColor ?? this.borderColor,
     );
   }
 
@@ -303,135 +209,41 @@ class FNButtonThemeData with Diagnosticable {
       return this;
     }
     return copyWith(
-      miniHeight: other.miniHeight,
-      miniPadding: other.miniPadding,
-      miniFontSize: other.miniFontSize,
-      smallHeight: other.smallHeight,
-      smallPadding: other.smallPadding,
-      smallFontSize: other.smallFontSize,
-      normalPadding: other.normalPadding,
-      normalFontSize: other.normalFontSize,
-      largeHeight: other.largeHeight,
       defaultHeight: other.defaultHeight,
-      defaultLineHeight: other.defaultLineHeight,
+      defaultFontWeight: other.defaultFontWeight,
       defaultFontSize: other.defaultFontSize,
-      defaultColor: other.defaultColor,
-      defaultBackgroundColor: other.defaultBackgroundColor,
-      defaultBorderColor: other.defaultBorderColor,
-      primaryColor: other.primaryColor,
-      primaryBackgroundColor: other.primaryBackgroundColor,
-      primaryBorderColor: other.primaryBorderColor,
-      successColor: other.successColor,
-      successBackgroundColor: other.successBackgroundColor,
-      successBorderColor: other.successBorderColor,
-      dangerColor: other.dangerColor,
-      dangerBackgroundColor: other.dangerBackgroundColor,
-      dangerBorderColor: other.dangerBorderColor,
-      warningColor: other.warningColor,
-      warningBackgroundColor: other.warningBackgroundColor,
-      warningBorderColor: other.warningBorderColor,
+      textColor: other.textColor,
+      backgroundColor: other.backgroundColor,
+      loadingTextColor: other.loadingTextColor,
+      disabledTextColor: other.disabledTextColor,
+      loadingDisabledTextColor: other.loadingDisabledTextColor,
+      disabledBackgroundColor: other.disabledBackgroundColor,
+      pressedTextColor: other.pressedTextColor,
+      pressedBackgroundColor: other.pressedBackgroundColor,
       borderWidth: other.borderWidth,
       borderRadius: other.borderRadius,
-      roundBorderRadius: other.roundBorderRadius,
-      plainBackgroundColor: other.plainBackgroundColor,
-      disabledOpacity: other.disabledOpacity,
-      iconSize: other.iconSize,
-      loadingIconSize: other.loadingIconSize,
-    );
-  }
-
-  static FNButtonThemeData lerp(
-      FNButtonThemeData? a, FNButtonThemeData? b, double t) {
-    return FNButtonThemeData(
-      miniHeight: lerpDouble(a?.miniHeight, b?.miniHeight, t),
-      miniPadding: EdgeInsets.lerp(a?.miniPadding, b?.miniPadding, t),
-      miniFontSize: lerpDouble(a?.miniFontSize, b?.miniFontSize, t),
-      smallHeight: lerpDouble(a?.smallHeight, b?.smallHeight, t),
-      smallPadding: EdgeInsets.lerp(a?.smallPadding, b?.smallPadding, t),
-      smallFontSize: lerpDouble(a?.smallFontSize, b?.smallFontSize, t),
-      normalPadding: EdgeInsets.lerp(a?.normalPadding, b?.normalPadding, t),
-      normalFontSize: lerpDouble(a?.normalFontSize, b?.normalFontSize, t),
-      largeHeight: lerpDouble(a?.largeHeight, b?.largeHeight, t),
-      defaultHeight: lerpDouble(a?.defaultHeight, b?.defaultHeight, t),
-      defaultLineHeight:
-          lerpDouble(a?.defaultLineHeight, b?.defaultLineHeight, t),
-      defaultFontSize: lerpDouble(a?.defaultFontSize, b?.defaultFontSize, t),
-      defaultColor: Color.lerp(a?.defaultColor, b?.defaultColor, t),
-      defaultBackgroundColor:
-          Color.lerp(a?.defaultBackgroundColor, b?.defaultBackgroundColor, t),
-      defaultBorderColor:
-          Color.lerp(a?.defaultBorderColor, b?.defaultBorderColor, t),
-      primaryColor: Color.lerp(a?.primaryColor, b?.primaryColor, t),
-      primaryBackgroundColor:
-          Color.lerp(a?.primaryBackgroundColor, b?.primaryBackgroundColor, t),
-      primaryBorderColor:
-          Color.lerp(a?.primaryBorderColor, b?.primaryBorderColor, t),
-      successColor: Color.lerp(a?.successColor, b?.successColor, t),
-      successBackgroundColor:
-          Color.lerp(a?.successBackgroundColor, b?.successBackgroundColor, t),
-      successBorderColor:
-          Color.lerp(a?.successBorderColor, b?.successBorderColor, t),
-      dangerColor: Color.lerp(a?.dangerColor, b?.dangerColor, t),
-      dangerBackgroundColor:
-          Color.lerp(a?.dangerBackgroundColor, b?.dangerBackgroundColor, t),
-      dangerBorderColor:
-          Color.lerp(a?.dangerBorderColor, b?.dangerBorderColor, t),
-      warningColor: Color.lerp(a?.warningColor, b?.warningColor, t),
-      warningBackgroundColor:
-          Color.lerp(a?.warningBackgroundColor, b?.warningBackgroundColor, t),
-      warningBorderColor:
-          Color.lerp(a?.warningBorderColor, b?.warningBorderColor, t),
-      borderWidth: lerpDouble(a?.borderWidth, b?.borderWidth, t),
-      borderRadius: lerpDouble(a?.borderRadius, b?.borderRadius, t),
-      roundBorderRadius:
-          lerpDouble(a?.roundBorderRadius, b?.roundBorderRadius, t),
-      plainBackgroundColor:
-          Color.lerp(a?.plainBackgroundColor, b?.plainBackgroundColor, t),
-      disabledOpacity: lerpDouble(a?.disabledOpacity, b?.disabledOpacity, t),
-      iconSize: lerpDouble(a?.iconSize, b?.iconSize, t),
-      loadingIconSize: lerpDouble(a?.loadingIconSize, b?.loadingIconSize, t),
+      borderColor: other.borderColor,
     );
   }
 
   @override
   int get hashCode {
     final List<Object?> values = <Object?>[
-      miniHeight,
-      miniPadding,
-      miniFontSize,
-      smallHeight,
-      smallPadding,
-      smallFontSize,
-      normalPadding,
-      normalFontSize,
-      largeHeight,
       defaultHeight,
-      defaultLineHeight,
+      defaultFontWeight,
       defaultFontSize,
-      defaultColor,
-      defaultBackgroundColor,
-      defaultBorderColor,
-      primaryColor,
-      primaryBackgroundColor,
-      primaryBorderColor,
-      successColor,
-      successBackgroundColor,
-      successBorderColor,
-      dangerColor,
-      dangerBackgroundColor,
-      dangerBorderColor,
-      warningColor,
-      warningBackgroundColor,
-      warningBorderColor,
+      textColor,
+      backgroundColor,
+      loadingTextColor,
+      disabledTextColor,
+      loadingDisabledTextColor,
+      disabledBackgroundColor,
+      pressedTextColor,
+      pressedBackgroundColor,
       borderWidth,
       borderRadius,
-      roundBorderRadius,
-      plainBackgroundColor,
-      disabledOpacity,
-      iconSize,
-      loadingIconSize,
+      borderColor,
     ];
-
     return Object.hashAll(values);
   }
 
@@ -444,128 +256,61 @@ class FNButtonThemeData with Diagnosticable {
       return false;
     }
     return other is FNButtonThemeData &&
-        other.miniHeight == miniHeight &&
-        other.miniPadding == miniPadding &&
-        other.miniFontSize == miniFontSize &&
-        other.smallHeight == smallHeight &&
-        other.smallPadding == smallPadding &&
-        other.smallFontSize == smallFontSize &&
-        other.normalPadding == normalPadding &&
-        other.normalFontSize == normalFontSize &&
-        other.largeHeight == largeHeight &&
         other.defaultHeight == defaultHeight &&
-        other.defaultLineHeight == defaultLineHeight &&
+        other.defaultFontWeight == defaultFontWeight &&
         other.defaultFontSize == defaultFontSize &&
-        other.defaultColor == defaultColor &&
-        other.defaultBackgroundColor == defaultBackgroundColor &&
-        other.defaultBorderColor == defaultBorderColor &&
-        other.primaryColor == primaryColor &&
-        other.primaryBackgroundColor == primaryBackgroundColor &&
-        other.primaryBorderColor == primaryBorderColor &&
-        other.successColor == successColor &&
-        other.successBackgroundColor == successBackgroundColor &&
-        other.successBorderColor == successBorderColor &&
-        other.dangerColor == dangerColor &&
-        other.dangerBackgroundColor == dangerBackgroundColor &&
-        other.dangerBorderColor == dangerBorderColor &&
-        other.warningColor == warningColor &&
-        other.warningBackgroundColor == warningBackgroundColor &&
-        other.warningBorderColor == warningBorderColor &&
+        other.textColor == textColor &&
+        other.backgroundColor == backgroundColor &&
+        other.loadingTextColor == loadingTextColor &&
+        other.disabledTextColor == disabledTextColor &&
+        other.loadingDisabledTextColor == loadingDisabledTextColor &&
+        other.disabledBackgroundColor == disabledBackgroundColor &&
+        other.pressedTextColor == pressedTextColor &&
+        other.pressedBackgroundColor == pressedBackgroundColor &&
         other.borderWidth == borderWidth &&
         other.borderRadius == borderRadius &&
-        other.roundBorderRadius == roundBorderRadius &&
-        other.plainBackgroundColor == plainBackgroundColor &&
-        other.disabledOpacity == disabledOpacity &&
-        other.iconSize == iconSize &&
-        other.loadingIconSize == loadingIconSize;
+        other.borderColor == borderColor &&
+        1 == 1;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty<double>('miniHeight', miniHeight,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<EdgeInsets>('miniPadding', miniPadding,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<double>('miniFontSize', miniFontSize,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<double>('smallHeight', smallHeight,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<EdgeInsets>('smallPadding', smallPadding,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<double>('smallFontSize', smallFontSize,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<EdgeInsets>(
-        'normalPadding', normalPadding,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<double>('normalFontSize', normalFontSize,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<double>('largeHeight', largeHeight,
-        defaultValue: null));
     properties.add(DiagnosticsProperty<double>('defaultHeight', defaultHeight,
         defaultValue: null));
-    properties.add(DiagnosticsProperty<double>(
-        'defaultLineHeight', defaultLineHeight,
+    properties.add(DiagnosticsProperty<FontWeight>(
+        'defaultFontWeight', defaultFontWeight,
         defaultValue: null));
     properties.add(DiagnosticsProperty<double>(
         'defaultFontSize', defaultFontSize,
         defaultValue: null));
-    properties.add(DiagnosticsProperty<Color>('defaultColor', defaultColor,
+    properties.add(
+        DiagnosticsProperty<Color>('textColor', textColor, defaultValue: null));
+    properties.add(DiagnosticsProperty<Color>(
+        'backgroundColor', backgroundColor,
         defaultValue: null));
     properties.add(DiagnosticsProperty<Color>(
-        'defaultBackgroundColor', defaultBackgroundColor,
+        'loadingTextColor', loadingTextColor,
         defaultValue: null));
     properties.add(DiagnosticsProperty<Color>(
-        'defaultBorderColor', defaultBorderColor,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<Color>('primaryColor', primaryColor,
+        'disabledTextColor', disabledTextColor,
         defaultValue: null));
     properties.add(DiagnosticsProperty<Color>(
-        'primaryBackgroundColor', primaryBackgroundColor,
+        'loadingDisabledTextColor', loadingDisabledTextColor,
         defaultValue: null));
     properties.add(DiagnosticsProperty<Color>(
-        'primaryBorderColor', primaryBorderColor,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<Color>('successColor', successColor,
+        'disabledBackgroundColor', disabledBackgroundColor,
         defaultValue: null));
     properties.add(DiagnosticsProperty<Color>(
-        'successBackgroundColor', successBackgroundColor,
+        'pressedTextColor', pressedTextColor,
         defaultValue: null));
     properties.add(DiagnosticsProperty<Color>(
-        'successBorderColor', successBorderColor,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<Color>('dangerColor', dangerColor,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<Color>(
-        'dangerBackgroundColor', dangerBackgroundColor,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<Color>(
-        'dangerBorderColor', dangerBorderColor,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<Color>('warningColor', warningColor,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<Color>(
-        'warningBackgroundColor', warningBackgroundColor,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<Color>(
-        'warningBorderColor', warningBorderColor,
+        'pressedBackgroundColor', pressedBackgroundColor,
         defaultValue: null));
     properties.add(DiagnosticsProperty<double>('borderWidth', borderWidth,
         defaultValue: null));
     properties.add(DiagnosticsProperty<double>('borderRadius', borderRadius,
         defaultValue: null));
-    properties.add(DiagnosticsProperty<double>(
-        'roundBorderRadius', roundBorderRadius,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<Color>(
-        'plainBackgroundColor', plainBackgroundColor,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty<double>(
-        'disabledOpacity', disabledOpacity,
-        defaultValue: null));
-    properties.add(
-        DiagnosticsProperty<double>('iconSize', iconSize, defaultValue: null));
-    properties.add(DiagnosticsProperty<double>(
-        'loadingIconSize', loadingIconSize,
+    properties.add(DiagnosticsProperty<Color>('borderColor', borderColor,
         defaultValue: null));
     super.debugFillProperties(properties);
   }

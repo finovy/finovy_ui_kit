@@ -74,6 +74,8 @@ class FNRefreshThemeData with Diagnosticable {
   final String completedText;
   final String failedText;
   final String noMoreText;
+  final String loadingText;
+  final String loadFailedText;
 
   factory FNRefreshThemeData({
     RefreshController? refreshController,
@@ -94,6 +96,8 @@ class FNRefreshThemeData with Diagnosticable {
     String? completedText,
     String? failedText,
     String? noMoreText,
+    String? loadingText,
+    String? loadFailedText,
   }) {
     return FNRefreshThemeData.raw(
       refreshController: refreshController ?? RefreshController(),
@@ -163,10 +167,20 @@ class FNRefreshThemeData with Diagnosticable {
           CustomFooter(
             builder: (context, mode) {
               final String text;
-
+              Widget? prefixIcon;
               switch (mode) {
                 case LoadStatus.noMore:
                   text = noMoreText ?? '- 已经到底啦 -';
+                  break;
+                case LoadStatus.loading:
+                  text = loadingText ?? '加载中';
+                  prefixIcon = const CupertinoActivityIndicator(
+                    color: FNColors.iconInLight002,
+                    radius: 8,
+                  );
+                  break;
+                case LoadStatus.failed:
+                  text = loadFailedText ?? '加载失败，请重试';
                   break;
                 default:
                   text = '';
@@ -175,10 +189,19 @@ class FNRefreshThemeData with Diagnosticable {
               return SizedBox(
                 height: 44,
                 child: Center(
-                  child: FNUIText(
-                    text: text,
-                    fontSize: FNFontSize14,
-                    color: FNColors.textExplainColor,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (prefixIcon != null)
+                        Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: prefixIcon),
+                      FNUIText(
+                        text: text,
+                        fontSize: FNFontSize14,
+                        color: FNColors.textExplainColor,
+                      ),
+                    ],
                   ),
                 ),
               );
@@ -199,6 +222,8 @@ class FNRefreshThemeData with Diagnosticable {
       completedText: completedText ?? '刷新成功',
       failedText: failedText ?? '刷新失败',
       noMoreText: noMoreText ?? '- 已经到底啦 -',
+      loadingText: loadingText ?? '加载中',
+      loadFailedText: loadFailedText ?? '加载失败，请重试',
     );
   }
 
@@ -221,6 +246,8 @@ class FNRefreshThemeData with Diagnosticable {
     required this.completedText,
     required this.failedText,
     required this.noMoreText,
+    required this.loadingText,
+    required this.loadFailedText,
   });
 
   FNRefreshThemeData copyWith({
