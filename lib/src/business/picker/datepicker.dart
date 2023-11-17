@@ -71,8 +71,7 @@ class FNUIDatePicker {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         FNUIButton(
-                          size: FNButtonSize.normal,
-                          type: FNButtonType.normal,
+                          type: FNButtonType.text,
                           border: false,
                           text: cancelLabel,
                           onTap: () {
@@ -81,8 +80,7 @@ class FNUIDatePicker {
                           },
                         ),
                         FNUIButton(
-                          size: FNButtonSize.normal,
-                          type: FNButtonType.normal,
+                          type: FNButtonType.text,
                           border: false,
                           text: confirmLabel,
                           onTap: () {

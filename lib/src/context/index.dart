@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 * @time:            2023/7/11 15:02
 */
 class FNDesignContext {
-  static late BuildContext _buildContext;
-  static BuildContext get buildContext => _buildContext;
+  static BuildContext? _buildContext;
+  static BuildContext? get buildContext => _buildContext;
 
   /*
   * @description:     直接指定上下文（不推荐，除非有明确的overlay）

@@ -212,7 +212,9 @@ class FNColors {
   static const double fontSizeSm = 12.0;
   static const double fontSizeMd = 14.0;
   static const double fontSizeLg = 16.0;
-  static const FontWeight fontWeightBold = FontWeight.w500;
+  static const double fontSizeNm = 16.0;
+  static const FontWeight fontWeightMedium = FontWeight.w500;
+  static const FontWeight fontWeightSemiBold = FontWeight.w600;
   static const double lineHeightXs = 14.0;
   static const double lineHeightSm = 18.0;
   static const double lineHeightMd = 20.0;
@@ -245,36 +247,60 @@ class FNColors {
   static const Color mainYellow = yellow;
 
   // // Button
-  static const double buttonMiniHeight = 24.0;
-  static const double buttonMiniFontSize = fontSizeXs;
-  static const double buttonSmallHeight = 32.0;
-  static const double buttonSmallFontSize = fontSizeSm;
-  static const double buttonNormalFontSize = fontSizeMd;
-  static const double buttonLargeHeight = 50.0;
-  static const double buttonDefaultHeight = 44.0;
-  static const double buttonDefaultLineHeight = 1.0;
-  static const double buttonDefaultFontSize = fontSizeLg;
-  static const Color buttonDefaultColor = primary;
-  static const Color buttonDefaultBackgroundColor = white;
-  static const Color buttonDefaultBorderColor = borderColor;
-  static const Color buttonPrimaryColor = white;
-  static const Color buttonPrimaryBackgroundColor = primary;
-  static const Color buttonPrimaryBorderColor = blue;
-  static const Color buttonSuccessColor = white;
-  static const Color buttonSuccessBackgroundColor = green;
-  static const Color buttonSuccessBorderColor = green;
-  static const Color buttonDangerColor = white;
-  static const Color buttonDangerBackgroundColor = red;
-  static const Color buttonDangerBorderColor = red;
-  static const Color buttonWarningColor = white;
-  static const Color buttonWarningBackgroundColor = orange;
-  static const Color buttonWarningBorderColor = orange;
-  static const double buttonBorderWidth = borderWidthBase;
-  static const double buttonBorderRadius = borderRadiusSm;
-  static const double buttonRoundBorderRadius = borderRadiusMd;
-  static const Color buttonPlainBackgroundColor = white;
-  static const double buttonDisabledOpacity = disabledOpacity;
-  static const Color buttonDefaultDisabledColor = textDisabledColor;
+  static const double btnDefaultHeight = 44.0;
+  static const double btnDefaultFontSize = 16.0;
+  static const double btnIconDefaultSize = 16.0;
+  static const double btnIconLoadingRadius = 9.0;
+
+  /// button primary (主要按钮)
+  static const Color btnPrimaryTextColor = white;
+  static const Color btnPrimaryBackgroundColor = primary;
+  static const Color btnPrimaryDisabledTextColor = white;
+  static const Color btnPrimaryLoadingTextColor = white;
+  static const Color btnPrimaryDisabledBackgroundColor =
+      buttonDisabledBackgroundColor;
+  static const Color btnPrimaryPressedBackgroundColor =
+      buttonPressedBackgroundColor;
+  static const double btnPrimaryBorderRadius = 4.0;
+  static const Color btnPrimaryBorderColor = clear;
+  static const double btnPrimaryBorderWidth = 0.0;
+
+  /// button secondary（次要按钮）
+  static const Color btnSecondaryTextColor = primary;
+  static const Color btnSecondaryBackgroundColor =
+      buttonAssDefaultBackgroundColor;
+  static const Color btnSecondaryDisabledTextColor = textDisabledColor;
+  static const Color btnSecondaryLoadingTextColor = textDisabledColor;
+  static const Color btnSecondaryDisabledBackgroundColor =
+      buttonAssDisabledBackgroundColor;
+  static const Color btnSecondaryPressedTextColor = white;
+  static const Color btnSecondaryPressedBackgroundColor = primary;
+
+  static const double btnSecondaryBorderRadius = 4.0;
+  static const Color btnSecondaryBorderColor = clear;
+  static const double btnSecondaryBorderWidth = 0.0;
+
+  /// button hollowed（线框按钮）
+  static const Color btnHollowedTextColor = primary;
+  static const Color btnHollowedBackgroundColor = white;
+  static const Color btnHollowedDisabledTextColor =
+      buttonDisabledBackgroundColor;
+  static const Color btnHollowedLoadingTextColor = Color(0xFFb5cbf6);
+  static const Color btnHollowedDisabledBackgroundColor =
+      textInDeepBackgroundWithAlphaColor;
+  static const double btnHollowedBorderRadius = 4.0;
+  static const Color btnHollowedBorderColor = primary;
+  static const double btnHollowedBorderWidth = 1.0;
+
+  /// button text-link（文字按钮）
+  static const Color btnLinkTextColor = primary;
+  static const Color btnLinkBackgroundColor = clear;
+  static const Color btnLinkDisabledTextColor = buttonDisabledBackgroundColor;
+  static const Color btnLinkLoadingTextColor = buttonDisabledBackgroundColor;
+  static const Color btnLinkDisabledBackgroundColor = clear;
+  static const double btnLinkBorderRadius = 0.0;
+  static const Color btnLinkBorderColor = clear;
+  static const double btnLinkBorderWidth = 0.0;
 
   // GridItem
   static const EdgeInsets gridItemContentPadding =
@@ -310,156 +336,14 @@ class FNColors {
   static const Color tagDefaultColor = gray1;
   static const Color tagPlainBackgroundColor = white;
 
-//*************************下面为已废弃的（兼容旧版本）***************************************
-  /// UI主题色
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ff0058ff = Color(0xff0058ff); //light
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ff14122C = Color(0xff14122C); //dark
+  /// Order
+  static const Color orderStatusWait = iconWaining;
+  static const Color orderStatusFailed = iconDanger;
+  static const Color orderStatusSuccess = iconSuccess;
 
-  /// *************************图标色*******************************///
-  /// 白色背景上的图标
-  ///
-  static const Color color_ff252525 = Color(0xff252525);
+  /// RPQ
+  static const Color scoreRadicalTextColor = Color(0xffecc88d);
 
-  /// 白色背景上的图标
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ff666666 = Color(0xff666666);
-
-  /// 白色背景上的图标
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_f8c8c8c = Color(0xff8c8c8c);
-
-  /// 白色背景上的图标
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ffc6c6c6 = Color(0xffc6c6c6);
-
-  /// 白色背景上的图标
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ffDDDDDD = Color(0xffdddddd);
-
-  /// 深色背景上的图标
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ffFFFFFF = Color(0xffffffff);
-
-  /// 表示信息提示的图标
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ff2F86F6 = Color(0xff2F86F6);
-
-  /// 表示成功、积极的图标
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ff11B17C = Color(0xff11B17C);
-
-  /// 表示警示的图标
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ffFFB42C = Color(0xffFFB42C);
-
-  /// 表示危险、失败的图标
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ffF56C6C = Color(0xffF56C6C);
-
-  /// *************************背景色*******************************///
-  /// 白色通用背景色
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_FFFFFFFF = Color(0xffffffff);
-
-  /// 白色通用背景色
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ffF6F6F6 = Color(0xffF6F6F6);
-
-  /// 模态框背景色
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ff000000 = Color.fromRGBO(0, 0, 0, 0.5);
-
-  /// 表示成功、积极的通告栏背景色
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ffE7F7F2 = Color(0xffE7F7F2);
-
-  /// 表示信息类提示的通告栏背景色
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ffEAF3FE = Color(0xffEAF3FE);
-
-  /// 表示警示的通告栏背景色
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ffFFF7EA = Color(0xffFFF7EA);
-
-  /// 表示危险、失败的通告栏背景色
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ffFEF0F0 = Color(0xffFEF0F0);
-  static const Color color_ff221E43 = Color(0xff221E43); //dark
-
-  /// *************************文本色*******************************///
-  /// 正文文字
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_FF252525 = Color(0xff252525);
-
-  /// 次重要文字
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_FF666666 = Color(0xff666666);
-
-  /// 提示文字
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ff8C8C8C = Color(0xff8C8C8C);
-
-  /// 辅助文字
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ffC6C6C6 = Color(0xffC6C6C6);
-
-  /// 深色背景上的文字
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_FFF = Color(0xffffffff);
-
-  /// 深色背景上的文字
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_FFFALPH5 = Color.fromRGBO(255, 255, 255, 0.9);
-
-  /// 警示文字
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ffEE0A24 = Color(0xffEE0A24);
-
-  /// *************************按钮色*******************************///
-  /// 主要按钮_默认态
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ff0058FF = Color(0xff0058FF);
-
-  /// 主要按钮_按下态
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ff004FE5 = Color(0xff004FE5);
-
-  /// 主要按钮_不可点击
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ffB5CBF6 = Color(0xffB5CBF6);
-
-  /// 辅助按钮_默认态
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ffF5F8FA = Color(0xffF5F8FA);
-
-  /// 辅助按钮_按下态
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_ffE8EBED = Color(0xffE8EBED);
-
-  /// 辅助按钮_不可点击
-  ///
-  static const Color color_fff5F8FA = Color(0xffF5F8FA);
-
-  /// *************************其他色*******************************///
-  /// 分割线
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_FFEAEAEA = Color(0xffEAEAEA);
-
-  /// 分割线
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_FFF1F1F1 = Color(0xffF1F1F1);
-
-  /// 进度条
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_FFF5F8FA = Color(0xffF5F8FA);
-
-  /// 图表
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_FFFF6700 = Color(0xffFF6700);
-
-  /// ecc88d
-  @Deprecated("已废弃,请按类别取颜色")
-  static const Color color_FFECC88D = Color(0xffecc88d);
+//*************************不在色板里的颜色***************************************
+  static const Color passwordCheckFailed = Color(0xFFee0a24);
 }

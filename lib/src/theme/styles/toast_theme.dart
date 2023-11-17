@@ -69,7 +69,7 @@ class FNToastThemeData with Diagnosticable {
   }) {
     return FNToastThemeData.raw(
       verticalOffset: verticalOffset ?? 0.0,
-      background: background ?? FNColors.yellow,
+      background: background ?? FNColors.background,
       radius: radius ?? 20.0,
       textStyle: textStyle ?? const TextStyle(),
     );
