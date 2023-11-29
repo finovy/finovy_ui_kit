@@ -58,7 +58,7 @@ class ZhCupertinoLocalizations implements CupertinoLocalizations {
   String datePickerMonth(int monthIndex) => _months[monthIndex - 1];
 
   @override
-  String datePickerDayOfMonth(int dayIndex, [int? weekDay])=> "$dayIndex日";
+  String datePickerDayOfMonth(int dayIndex, [int? weekDay]) => "$dayIndex日";
 
   @override
   String datePickerHour(int hour) => "$hour时";
@@ -67,7 +67,8 @@ class ZhCupertinoLocalizations implements CupertinoLocalizations {
   String datePickerHourSemanticsLabel(int hour) => "$hour o'clock";
 
   @override
-  String datePickerMinute(int minute) => "${minute.toString().padLeft(2, '0')}分";
+  String datePickerMinute(int minute) =>
+      "${minute.toString().padLeft(2, '0')}分";
 
   @override
   String datePickerMinuteSemanticsLabel(int minute) {
@@ -171,7 +172,27 @@ class ZhCupertinoLocalizations implements CupertinoLocalizations {
   // TODO: implement noSpellCheckReplacementsLabel
   String get noSpellCheckReplacementsLabel => throw UnimplementedError();
 
+  @override
+  String datePickerStandaloneMonth(int monthIndex) {
+    // TODO: implement datePickerStandaloneMonth
+    throw UnimplementedError();
+  }
 
+  @override
+  // TODO: implement lookUpButtonLabel
+  String get lookUpButtonLabel => throw UnimplementedError();
+
+  @override
+  // TODO: implement menuDismissLabel
+  String get menuDismissLabel => throw UnimplementedError();
+
+  @override
+  // TODO: implement searchWebButtonLabel
+  String get searchWebButtonLabel => throw UnimplementedError();
+
+  @override
+  // TODO: implement shareButtonLabel
+  String get shareButtonLabel => throw UnimplementedError();
 }
 
 class MyLocalizationsDelegate
