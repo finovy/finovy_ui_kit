@@ -185,6 +185,12 @@ class FNUITextField extends StatefulWidget {
   /// 自定义formatter
   final List<TextInputFormatter>? formatter;
 
+  /// 文字方向
+  final TextDirection? textDirection;
+
+  /// hint文字方向
+  final TextDirection? hintTextDirection;
+
   const FNUITextField({
     Key? key,
     BaseKeyBoardType keyboardType = BaseKeyBoardType.text,
@@ -230,6 +236,8 @@ class FNUITextField extends StatefulWidget {
     this.formatter,
     this.prefixIconConstraints,
     this.suffixIconConstraints,
+    this.textDirection,
+    this.hintTextDirection,
   })  : assert(maxLines == null || maxLines > 0),
         assert(maxLength == null || maxLength > 0),
         keyboardType =
@@ -385,6 +393,7 @@ class _FNTextField extends State<FNUITextField> {
         disabledColor: FNColors.textColor,
       ),
       child: TextField(
+        textDirection: widget.textDirection,
         enabled: widget.enabled,
         controller: _controller,
         focusNode: _isVerifyCode ? _verifyNode : widget.focusNode,
@@ -401,6 +410,7 @@ class _FNTextField extends State<FNUITextField> {
               ),
           counterText: '',
           hintText: widget.hintText,
+          hintTextDirection: widget.hintTextDirection,
           hintMaxLines: 5,
           border: widget.inputBorder ?? InputBorder.none,
           enabledBorder: widget.enabledBorder ?? InputBorder.none,

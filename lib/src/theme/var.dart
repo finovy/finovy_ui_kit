@@ -346,4 +346,6 @@ class FNColors {
 
 //*************************不在色板里的颜色***************************************
   static const Color passwordCheckFailed = Color(0xFFee0a24);
+
+  static const Color failStateBackgroundColor = Color(0xFFFFD6D6);
 }
