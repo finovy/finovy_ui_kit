@@ -130,7 +130,7 @@ class FNButtonThemeData with Diagnosticable {
   }) {
     return FNButtonThemeData.raw(
       defaultHeight: defaultHeight ?? FNColors.btnDefaultHeight,
-      defaultFontWeight: defaultFontWeight ?? FontWeight.w500,
+      defaultFontWeight: defaultFontWeight ?? FNColors.fontWeightNormal,
       defaultFontSize: defaultFontSize ?? FNColors.btnDefaultFontSize,
       textColor: textColor ?? FNColors.btnPrimaryTextColor,
       backgroundColor: backgroundColor ?? FNColors.btnPrimaryBackgroundColor,

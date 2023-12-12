@@ -4,6 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:fn_ui_kit/src/theme/styles/export.dart';
 import 'package:fn_ui_kit/src/theme/var.dart';
 
+// 主题类型
+enum FNThemeType {
+  fnThemeDefault, // 默认
+  fnThemeCustom, //自定义
+}
+
 /*
 * @description:     组件主题配置
 * param:
@@ -14,31 +20,32 @@ import 'package:fn_ui_kit/src/theme/var.dart';
 class FNTheme extends StatelessWidget {
   final Widget child;
   final FNThemeData data;
+  final FNThemeType? type;
   const FNTheme({
     Key? key,
     required this.child,
     required this.data,
+    this.type,
   }) : super(key: key);
 
   static final FNThemeData _fallback = FNThemeData.fallback();
-
   static FNThemeData of(BuildContext context) {
-    final _InheritedFlanTheme? inheritedTheme =
-        context.dependOnInheritedWidgetOfExactType<_InheritedFlanTheme>();
+    final _InheritedFnTheme? inheritedTheme =
+        context.dependOnInheritedWidgetOfExactType<_InheritedFnTheme>();
     return inheritedTheme?.theme.data ?? _fallback;
   }
 
   @override
   Widget build(BuildContext context) {
-    return _InheritedFlanTheme(
+    return _InheritedFnTheme(
       theme: this,
       child: child,
     );
   }
 }
 
-class _InheritedFlanTheme extends InheritedTheme {
-  const _InheritedFlanTheme({
+class _InheritedFnTheme extends InheritedTheme {
+  const _InheritedFnTheme({
     Key? key,
     required this.theme,
     required Widget child,
@@ -52,7 +59,7 @@ class _InheritedFlanTheme extends InheritedTheme {
   }
 
   @override
-  bool updateShouldNotify(_InheritedFlanTheme old) =>
+  bool updateShouldNotify(_InheritedFnTheme old) =>
       theme.data != old.theme.data;
 }
 
@@ -98,6 +105,7 @@ class FNThemeData with Diagnosticable {
   final FNScaffoldThemeData scaffoldTheme;
 
   factory FNThemeData({
+    FNThemeType? type,
     Color? overlayBackgroundColor,
     FNButtonThemeData? buttonTheme,
     FNNoticeBarThemeData? noticeBarTheme,
@@ -112,6 +120,8 @@ class FNThemeData with Diagnosticable {
     FNRefreshThemeData? refreshTheme,
     FNScaffoldThemeData? scaffoldTheme,
   }) {
+    //设置主题配置类别
+    FNThemeManager.instance._ofThemeType(type ?? FNThemeType.fnThemeDefault);
     return FNThemeData.raw(
       overlayBackgroundColor: overlayBackgroundColor ?? FNColors.card,
       buttonTheme: buttonTheme ?? FNButtonThemeData(),
@@ -146,4 +156,17 @@ class FNThemeData with Diagnosticable {
     required this.refreshTheme,
     required this.scaffoldTheme,
   });
+}
+
+class FNThemeManager {
+  static final FNThemeManager _singleton = FNThemeManager._();
+
+  static FNThemeManager get instance => _singleton;
+
+  FNThemeManager._();
+  FNThemeType? _type;
+  FNThemeType get current => _type ?? FNThemeType.fnThemeDefault;
+  void _ofThemeType(FNThemeType? type) {
+    _type = type;
+  }
 }
