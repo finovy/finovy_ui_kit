@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
+import 'extentions/style.dart';
 
+/*
+* @description:     颜色配置（normal为默认配置、custom为自定义配置）
+* param:
+* @return:
+* @author:          novice.cai
+* @time:            2023/12/12 11:49
+*/
 class FNColors {
-  static const Color black = Color(0xFF000000);
+  static Color black = FNAccentCommonStyle<Color>.swatch(const {
+    "normal": Color(0xFF000000),
+    "custom": Color(0xFF000000),
+  }).dy;
   static const Color white = Color(0xFFFFFFFF);
   static const Color gray1 = Color(0xFFF7F8Fa);
   static const Color gray2 = Color(0xFFF2F3F5);
@@ -57,7 +68,10 @@ class FNColors {
 
   //*************************基础组件颜色（来源配色面板）***************************************
   /// 主题色
-  static const Color primary = Color(0xFF0058ff);
+  static Color primary = FNAccentCommonStyle.swatch(const {
+    "normal": Color(0xFF0058ff),
+    "custom": Color(0xFF2c36de),
+  }).dy;
 
   /// 背景色集合
   /// //*********** 白色通用背景**************//
@@ -113,14 +127,17 @@ class FNColors {
   static const Color warningColor = textWarningColor;
 
   ///主题色文字
-  static const Color textPrimaryColor = primary;
+  static Color textPrimaryColor = primary;
 
   /// 禁用文字色
   static const Color textDisabledColor = Color(0xFFc6c6c6);
 
   /// 样式
-  static const TextStyle textPrimaryStyle =
-      TextStyle(fontSize: 16, fontWeight: FontWeight.w500);
+  static TextStyle textPrimaryStyle = FNAccentCommonStyle.swatch(const {
+    "normal": TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+    "custom": TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
+  }).dy;
+
   static const TextStyle textSecondaryStyle =
       TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
   static const TextStyle textLinkStyle = textSecondaryStyle;
@@ -131,19 +148,34 @@ class FNColors {
   //*********** 按钮配色**************//
 
   /// [普通]按钮按下时背景色
-  static const Color buttonPressedBackgroundColor = Color(0xFF004fe5);
+  static Color buttonPressedBackgroundColor = FNAccentCommonStyle.swatch(const {
+    "normal": Color(0xFF004fe5),
+    "custom": Color(0xFF2028be),
+  }).dy;
 
   /// [普通]按钮禁用时背景色
-  static const Color buttonDisabledBackgroundColor = Color(0xFFb5cbf6);
+  static Color buttonDisabledBackgroundColor =
+      FNAccentCommonStyle.swatch(const {
+    "normal": Color(0xFFb5cbf6),
+    "custom": Color(0xFFd4d7fd),
+  }).dy;
 
   /// [辅助按钮]按钮常态时背景色
-  static const Color buttonAssDefaultBackgroundColor = Color(0xFFf5f8fa);
+  static Color buttonAssDefaultBackgroundColor =
+      FNAccentCommonStyle.swatch(const {
+    "normal": Color(0xFFf5f8fa),
+    "custom": Color(0xFFf5f8fa),
+  }).dy;
 
   /// [辅助按钮]按钮按下时背景色
-  static const Color buttonAssPressedBackgroundColor = Color(0xFFe8ebed);
+  static Color buttonAssPressedBackgroundColor =
+      FNAccentCommonStyle.swatch(const {
+    "normal": Color(0xFFe8ebed),
+    "custom": Color(0xFFe8ebed),
+  }).dy;
 
   /// [辅助按钮]按钮禁用时背景色
-  static const Color buttonAssDisabledBackgroundColor =
+  static Color buttonAssDisabledBackgroundColor =
       buttonAssDefaultBackgroundColor;
 
   //*********** 图标配色**************//
@@ -213,7 +245,14 @@ class FNColors {
   static const double fontSizeMd = 14.0;
   static const double fontSizeLg = 16.0;
   static const double fontSizeNm = 16.0;
-  static const FontWeight fontWeightMedium = FontWeight.w500;
+  static FontWeight fontWeightNormal = FNAccentCommonStyle.swatch(const {
+    "normal": FontWeight.w500,
+    "custom": FontWeight.normal,
+  }).dy;
+  static FontWeight fontWeightMedium = FNAccentCommonStyle.swatch(const {
+    "normal": FontWeight.w500,
+    "custom": FontWeight.normal,
+  }).dy;
   static const FontWeight fontWeightSemiBold = FontWeight.w600;
   static const double lineHeightXs = 14.0;
   static const double lineHeightSm = 18.0;
@@ -240,63 +279,87 @@ class FNColors {
   static const double borderRadiusMax = 999.0;
 
   // 快捷访问（兼容旧的访问方式，后续废弃）
-  static const Color mainColor = primary;
+  static Color mainColor = primary;
   static const Color mainRed = red;
   static const Color mainGreen = green;
   static const Color mainBlue = blue;
   static const Color mainYellow = yellow;
 
   // // Button
-  static const double btnDefaultHeight = 44.0;
-  static const double btnDefaultFontSize = 16.0;
-  static const double btnIconDefaultSize = 16.0;
-  static const double btnIconLoadingRadius = 9.0;
+  static double btnDefaultHeight = FNAccentCommonStyle.swatch(const {
+    "normal": 44.0,
+    "custom": 32.0,
+  }).dy;
+  static double btnDefaultFontSize = FNAccentCommonStyle.swatch(const {
+    "normal": 16.0,
+    "custom": 14.0,
+  }).dy;
+  static double btnIconDefaultSize = FNAccentCommonStyle.swatch(const {
+    "normal": 16.0,
+    "custom": 16.0,
+  }).dy;
+  static double btnIconLoadingRadius = FNAccentCommonStyle.swatch(const {
+    "normal": 9.0,
+    "custom": 9.0,
+  }).dy;
 
   /// button primary (主要按钮)
   static const Color btnPrimaryTextColor = white;
-  static const Color btnPrimaryBackgroundColor = primary;
+  static Color btnPrimaryBackgroundColor = primary;
   static const Color btnPrimaryDisabledTextColor = white;
   static const Color btnPrimaryLoadingTextColor = white;
-  static const Color btnPrimaryDisabledBackgroundColor =
+  static Color btnPrimaryDisabledBackgroundColor =
       buttonDisabledBackgroundColor;
-  static const Color btnPrimaryPressedBackgroundColor =
-      buttonPressedBackgroundColor;
-  static const double btnPrimaryBorderRadius = 4.0;
+  static Color btnPrimaryPressedBackgroundColor = buttonPressedBackgroundColor;
+  static double btnPrimaryBorderRadius = FNAccentCommonStyle.swatch(const {
+    "normal": 4.0,
+    "custom": 16.0,
+  }).dy;
   static const Color btnPrimaryBorderColor = clear;
   static const double btnPrimaryBorderWidth = 0.0;
 
   /// button secondary（次要按钮）
-  static const Color btnSecondaryTextColor = primary;
-  static const Color btnSecondaryBackgroundColor =
-      buttonAssDefaultBackgroundColor;
+  static Color btnSecondaryTextColor = primary;
+  static Color btnSecondaryBackgroundColor = buttonAssDefaultBackgroundColor;
   static const Color btnSecondaryDisabledTextColor = textDisabledColor;
   static const Color btnSecondaryLoadingTextColor = textDisabledColor;
-  static const Color btnSecondaryDisabledBackgroundColor =
+  static Color btnSecondaryDisabledBackgroundColor =
       buttonAssDisabledBackgroundColor;
   static const Color btnSecondaryPressedTextColor = white;
-  static const Color btnSecondaryPressedBackgroundColor = primary;
+  static Color btnSecondaryPressedBackgroundColor = primary;
 
-  static const double btnSecondaryBorderRadius = 4.0;
+  static double btnSecondaryBorderRadius = FNAccentCommonStyle.swatch(const {
+    "normal": 4.0,
+    "custom": 16.0,
+  }).dy;
   static const Color btnSecondaryBorderColor = clear;
   static const double btnSecondaryBorderWidth = 0.0;
 
   /// button hollowed（线框按钮）
-  static const Color btnHollowedTextColor = primary;
+  static Color btnHollowedTextColor = primary;
   static const Color btnHollowedBackgroundColor = white;
-  static const Color btnHollowedDisabledTextColor =
-      buttonDisabledBackgroundColor;
-  static const Color btnHollowedLoadingTextColor = Color(0xFFb5cbf6);
+  static Color btnHollowedDisabledTextColor = buttonDisabledBackgroundColor;
+  static Color btnHollowedLoadingTextColor = FNAccentCommonStyle.swatch(const {
+    "normal": Color(0xFFb5cbf6),
+    "custom": Color(0xFFb5cbf6),
+  }).dy;
   static const Color btnHollowedDisabledBackgroundColor =
       textInDeepBackgroundWithAlphaColor;
-  static const double btnHollowedBorderRadius = 4.0;
-  static const Color btnHollowedBorderColor = primary;
-  static const double btnHollowedBorderWidth = 1.0;
+  static double btnHollowedBorderRadius = FNAccentCommonStyle.swatch(const {
+    "normal": 4.0,
+    "custom": 16.0,
+  }).dy;
+  static Color btnHollowedBorderColor = primary;
+  static double btnHollowedBorderWidth = FNAccentCommonStyle.swatch(const {
+    "normal": 1.0,
+    "custom": 1.0,
+  }).dy;
 
   /// button text-link（文字按钮）
-  static const Color btnLinkTextColor = primary;
+  static Color btnLinkTextColor = primary;
   static const Color btnLinkBackgroundColor = clear;
-  static const Color btnLinkDisabledTextColor = buttonDisabledBackgroundColor;
-  static const Color btnLinkLoadingTextColor = buttonDisabledBackgroundColor;
+  static Color btnLinkDisabledTextColor = buttonDisabledBackgroundColor;
+  static Color btnLinkLoadingTextColor = buttonDisabledBackgroundColor;
   static const Color btnLinkDisabledBackgroundColor = clear;
   static const double btnLinkBorderRadius = 0.0;
   static const Color btnLinkBorderColor = clear;
@@ -330,7 +393,7 @@ class FNColors {
   static const double tagLargeFontSize = fontSizeMd;
   static const double tagRoundBorderRadius = borderRadiusMax;
   static const Color tagDangerColor = Color(0xFFffd7d7);
-  static const Color tagPrimaryColor = primary;
+  static Color tagPrimaryColor = primary;
   static const Color tagSuccessColor = Color(0xFFcae6df);
   static const Color tagWarningColor = tagDangerColor;
   static const Color tagDefaultColor = gray1;

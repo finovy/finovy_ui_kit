@@ -391,7 +391,12 @@ class FNUIDialog extends AlertDialog {
   Widget _mapTextToGesWidget(BuildContext context, String label, int index,
       bool main, UIDialogConfig dialogConfig,
       {_ButtonType type = _ButtonType.single}) {
-    Text text = Text(label);
+    Text text = Text(
+      label,
+      maxLines: 1,
+      textAlign: TextAlign.center,
+      overflow: TextOverflow.ellipsis,
+    );
     Widget ges = GestureDetector(
       child: main
           ? _generateMainWidget(text, dialogConfig.mainActionBackgroundColor,

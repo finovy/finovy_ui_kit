@@ -347,7 +347,7 @@ class _FNTextField extends State<FNUITextField> {
         ];
       case BaseKeyBoardType.emailAddress:
         return <TextInputFormatter>[
-          FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]|[0-9]|[@.]")),
+          FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]|[0-9]|[@._]")),
           LengthLimitingTextInputFormatter(widget.lengthLimit ?? 200),
           FilteringTextInputFormatter.deny(RegExp(REGEX_EMOJI)),
         ];
